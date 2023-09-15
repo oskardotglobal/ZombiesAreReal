@@ -1,5 +1,11 @@
 package com.example.examplemod.entities;
 
-public class HordeZombie
+import net.minecraft.world.World;
+
+public class HordeZombie extends CustomBaseZombie
 {
+    public HordeZombie(World worldIn)
+    {
+        super(worldIn);
+    }
 }

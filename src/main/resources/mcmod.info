@@ -1,14 +1,14 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "zombiesrealism",
+  "name": "Zombies Are Real",
+  "description": "Enhance the spawning and behavior of zombies to make them feel coherent.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["GitHub @P-Gruber"],
+  "credits": "GitHub @P-Gruber",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []

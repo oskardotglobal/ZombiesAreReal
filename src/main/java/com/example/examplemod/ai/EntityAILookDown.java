@@ -23,7 +23,6 @@ public class EntityAILookDown extends EntityAIBase
     @Override
     public void updateTask()
     {
-        // Set the look position directly below the entity
         this.entity
                 .getLookHelper()
                 .setLookPosition(

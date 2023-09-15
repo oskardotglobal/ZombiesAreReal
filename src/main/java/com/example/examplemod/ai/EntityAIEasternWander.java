@@ -46,11 +46,8 @@ public class EntityAIEasternWander extends EntityAIWander
     @Override
     protected Vec3d getPosition()
     {
-        // Randomness in the eastern movement (e.g., move between 3 to 9 blocks east).
         double randomEastMovement = 3 + rand.nextDouble() * 6;
-
-        // Randomness in the z-axis (e.g., move between -4 and 4 blocks on the z-axis).
-        double randomZMovement = (rand.nextDouble() * 8) - 4;
+        double randomZMovement    = (rand.nextDouble() * 6) - 3;
 
         Vec3d direction = new Vec3d(randomEastMovement, 0, randomZMovement);
 
