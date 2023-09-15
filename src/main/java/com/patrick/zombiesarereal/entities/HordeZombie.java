@@ -1,4 +1,4 @@
-package com.example.examplemod.entities;
+package com.patrick.zombiesarereal.entities;
 
 import net.minecraft.world.World;
 

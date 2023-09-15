@@ -1,4 +1,4 @@
-package com.example.examplemod;
+package com.patrick.zombiesarereal;
 
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

@@ -1,7 +1,7 @@
-package com.example.examplemod;
+package com.patrick.zombiesarereal;
 
-import com.example.examplemod.entities.HordeZombie;
-import com.example.examplemod.entities.TerrainZombie;
+import com.patrick.zombiesarereal.entities.HordeZombie;
+import com.patrick.zombiesarereal.entities.TerrainZombie;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;

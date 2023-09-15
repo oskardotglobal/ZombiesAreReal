@@ -1,4 +1,4 @@
-package com.example.examplemod;
+package com.patrick.zombiesarereal;
 
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;

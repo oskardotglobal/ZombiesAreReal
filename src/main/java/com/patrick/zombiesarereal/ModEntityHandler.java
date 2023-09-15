@@ -1,4 +1,4 @@
-package com.example.examplemod;
+package com.patrick.zombiesarereal;
 
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntityZombie;

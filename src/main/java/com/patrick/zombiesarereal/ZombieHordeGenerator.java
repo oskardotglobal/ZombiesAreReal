@@ -1,6 +1,6 @@
-package com.example.examplemod;
+package com.patrick.zombiesarereal;
 
-import com.example.examplemod.entities.HordeZombie;
+import com.patrick.zombiesarereal.entities.HordeZombie;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;

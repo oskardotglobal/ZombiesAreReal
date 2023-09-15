@@ -1,4 +1,4 @@
-package com.example.examplemod.ai;
+package com.patrick.zombiesarereal.ai;
 
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.EntityAIBase;

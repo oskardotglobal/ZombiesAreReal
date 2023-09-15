@@ -1,14 +1,12 @@
-package com.example.examplemod.entities;
+package com.patrick.zombiesarereal.entities;
 
-import com.example.examplemod.ai.EntityAIEasternWander;
-import com.example.examplemod.ai.EntityAILookDown;
+import com.patrick.zombiesarereal.ai.EntityAIEasternWander;
+import com.patrick.zombiesarereal.ai.EntityAILookDown;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-
-import java.util.Iterator;
 
 public class CustomBaseZombie extends EntityZombie
 {
