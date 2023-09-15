@@ -17,7 +17,8 @@ public class EntityAILookDown extends EntityAIBase
     @Override
     public boolean shouldExecute()
     {
-        return true;  // Always return true to constantly look down
+        // Only execute if the entity is not currently attacking
+        return entity.getAttackTarget() == null;
     }
 
     @Override

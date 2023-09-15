@@ -19,6 +19,11 @@ public class EntityAIEasternWander extends EntityAIWander
     @Override
     public boolean shouldExecute()
     {
+        if (this.entity.getAttackTarget() != null)
+        {
+            return false;
+        }
+
         if (!this.mustUpdate)
         {
             if (this.entity.getRNG().nextInt(this.executionChance) != 0)
