@@ -11,11 +11,13 @@ public class ForgeEventHandler
     @SubscribeEvent
     public static void onWorldTick(TickEvent.WorldTickEvent event)
     {
-        if (event.phase == TickEvent.Phase.START && !event.world.isRemote &&
-                (event.world.getWorldTime() % 24000 == 13000 || event.world.getWorldTime() % 24000 == 23000)
-        )
+        if (!event.world.isRemote && event.phase == TickEvent.Phase.START)
         {
-            ZombieHordeGenerator.generate(event.world);
+            long timeOfDay = event.world.getWorldTime() % 24000;
+            if (timeOfDay == 13000 || timeOfDay == 23000)
+            {
+                ZombieHordeGenerator.generate(event.world);
+            }
         }
     }
 
