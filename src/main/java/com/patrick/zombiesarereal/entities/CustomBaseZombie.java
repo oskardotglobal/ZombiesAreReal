@@ -1,5 +1,6 @@
 package com.patrick.zombiesarereal.entities;
 
+import com.patrick.zombiesarereal.ai.EntityAINonSneakingNearestAttackableTarget;
 import com.patrick.zombiesarereal.ai.EntityAIEasternWander;
 import com.patrick.zombiesarereal.ai.EntityAILookDown;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -27,10 +28,17 @@ public class CustomBaseZombie extends EntityZombie
     }
 
     @Override
+    public boolean isArmsRaised()
+    {
+        return false;
+    }
+
+    @Override
     protected void initEntityAI()
     {
+
         this.tasks.addTask(2, new EntityAIZombieAttack(this, 1.0D, false));
-        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
+        this.targetTasks.addTask(2, new EntityAINonSneakingNearestAttackableTarget(this, EntityPlayer.class, true));
         this.tasks.addTask(4, new EntityAIMoveTowardsRestriction(this, PASSIVE_SPEED_MULTIPLIER));
         this.tasks.addTask(5, new EntityAILookDown(this));
         this.tasks.addTask(6, new EntityAIEasternWander(this, PASSIVE_SPEED_MULTIPLIER, 1));
