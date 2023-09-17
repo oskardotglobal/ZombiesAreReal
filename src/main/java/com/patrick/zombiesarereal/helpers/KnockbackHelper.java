@@ -1,4 +1,4 @@
-package com.patrick.zombiesarereal.utils;
+package com.patrick.zombiesarereal.helpers;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -11,7 +11,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class KnockbackUtil
+public class KnockbackHelper
 {
     public static void applyKnockbackToLivingEntity(EntityPlayer player, Entity target, boolean swingArm)
     {
