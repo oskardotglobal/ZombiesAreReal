@@ -24,10 +24,21 @@ public class KnockbackHelper
 
     private static void applyKnockbackToLivingEntity(EntityPlayer player, Entity target)
     {
-        double knockbackStrength = 0.8;
+        double knockbackStrength = 0.6;
         Vec3d  lookVec           = player.getLookVec();
-        target.motionX += lookVec.x * knockbackStrength;
-        target.motionZ += lookVec.z * knockbackStrength;
+
+        // Calculate the new motion values after knockback
+        double newMotionX = target.motionX + lookVec.x * knockbackStrength;
+        double newMotionZ = target.motionZ + lookVec.z * knockbackStrength;
+
+        // Limit the motion values so the entity doesn't get pushed too far
+        double maxSpeed = 0.5; // Adjust this value as needed
+        newMotionX = Math.max(-maxSpeed, Math.min(maxSpeed, newMotionX));
+        newMotionZ = Math.max(-maxSpeed, Math.min(maxSpeed, newMotionZ));
+
+        // Apply the knockback
+        target.motionX = newMotionX;
+        target.motionZ = newMotionZ;
     }
 
     private static boolean isNonLivingEntity(Entity entity)

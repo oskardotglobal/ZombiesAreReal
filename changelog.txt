@@ -1,3 +1,18 @@
+Build: 1.4.1
+	patrick:
+	    Fix the FOV that gets too close after jumping
+
+	    Fix speed exhaustion
+
+	    Fix zombies been too fast
+
+	    Fix zombies been too weak
+
+	    Fix player providing too much nockback
+
+	    Fix SpeedHelper to work in multiplayer
+
+=========
 Build: 1.4.0
 	patrick:
 	    Zombies do not drop raw meet anymore

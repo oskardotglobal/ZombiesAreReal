@@ -17,12 +17,12 @@ import net.minecraft.world.World;
 public class CustomBaseZombie extends EntityZombie
 {
     public static final int    FOLLOW_RANGE             = 20;
-    public static final double MIN_SPEED                = 0.25D;
-    public static final double MAX_SPEED                = 0.45D;
+    public static final double MIN_SPEED                = 0.20D;
+    public static final double MAX_SPEED                = 0.40D;
     public static final double MAX_HEALTH               = 10.0F;
     public static final double MIN_HEALTH               = 1.0F;
     public static final double MIN_ATTACK_DAMAGE        = 1.0F;
-    public static final double MAX_ATTACK_DAMAGE        = 6.0F;
+    public static final double MAX_ATTACK_DAMAGE        = 8.0F;
     public static final double PASSIVE_SPEED_MULTIPLIER = 0.4D;
 
     public CustomBaseZombie(World worldIn)
@@ -75,7 +75,7 @@ public class CustomBaseZombie extends EntityZombie
     @Override
     public boolean attackEntityAsMob(Entity entityIn)
     {
-        if (this.getDistance(entityIn) < 1.0)
+        if (this.getDistance(entityIn) < 1.2)
         {
             return super.attackEntityAsMob(entityIn);
         }

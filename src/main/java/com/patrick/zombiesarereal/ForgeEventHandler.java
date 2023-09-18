@@ -73,8 +73,6 @@ public class ForgeEventHandler
         if ((event.getEntity() instanceof EntityPlayer))
         {
             EntityPlayer player = (EntityPlayer) event.getEntity();
-            // Ensure it runs only once per tick (to avoid dual-side execution on servers)
-            if (player.world.isRemote) return;
             SpeedHelper.updatePlayerSpeed(player);
         }
     }
@@ -83,6 +81,6 @@ public class ForgeEventHandler
     public static void onFOVUpdate(FOVUpdateEvent event)
     {
         // Prevent the fov reduction to bee too annoying when jumping
-        event.setNewfov(Math.max(0.90F, event.getFov()));
+        event.setNewfov(Math.max(0.95F, event.getFov()));
     }
 }
