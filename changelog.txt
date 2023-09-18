@@ -1,3 +1,10 @@
+Build: 1.3.0
+	patrick:
+	    Players slow down after jumping
+
+	    Players get exhausted after running or jumping too much
+
+=========
 Build: 1.2.0
 	patrick:
 	    Players can sneak to avoid zombies

@@ -1,8 +1,11 @@
 package com.patrick.zombiesarereal;
 
-import com.patrick.zombiesarereal.utils.KnockbackUtil;
+import com.patrick.zombiesarereal.helpers.KnockbackHelper;
+import com.patrick.zombiesarereal.helpers.SpeedHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.client.event.FOVUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -35,8 +38,8 @@ public class ForgeEventHandler
         if (player.getHeldItemMainhand().isEmpty() && event.isCancelable())
         {
             event.setCanceled(true);
-            Entity        target = event.getTarget();
-            KnockbackUtil.applyKnockbackToLivingEntity(player, target, false);
+            Entity target = event.getTarget();
+            KnockbackHelper.applyKnockbackToLivingEntity(player, target, false);
         }
     }
 
@@ -51,6 +54,35 @@ public class ForgeEventHandler
     {
         EntityPlayer player = event.getEntityPlayer();
         Entity       target = event.getTarget();
-        KnockbackUtil.applyKnockbackToLivingEntity(player, target, true);
+        KnockbackHelper.applyKnockbackToLivingEntity(player, target, true);
+    }
+
+    @SubscribeEvent
+    public static void onPlayerJump(LivingEvent.LivingJumpEvent event)
+    {
+        if (event.getEntity() instanceof EntityPlayer)
+        {
+            EntityPlayer player = (EntityPlayer) event.getEntity();
+            SpeedHelper.onPlayerJumped(player);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerUpdate(LivingEvent.LivingUpdateEvent event)
+    {
+        if ((event.getEntity() instanceof EntityPlayer))
+        {
+            EntityPlayer player = (EntityPlayer) event.getEntity();
+            // Ensure it runs only once per tick (to avoid dual-side execution on servers)
+            if (player.world.isRemote) return;
+            SpeedHelper.updatePlayerSpeed(player);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onFOVUpdate(FOVUpdateEvent event)
+    {
+        // Prevent the fov reduction to bee too annoying when jumping
+        event.setNewfov(Math.max(0.90F, event.getFov()));
     }
 }
