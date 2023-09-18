@@ -1,12 +1,17 @@
 package com.patrick.zombiesarereal.entities;
 
-import com.patrick.zombiesarereal.ai.EntityAINonSneakingNearestAttackableTarget;
 import com.patrick.zombiesarereal.ai.EntityAIEasternWander;
 import com.patrick.zombiesarereal.ai.EntityAILookDown;
+import com.patrick.zombiesarereal.ai.EntityAINonSneakingNearestAttackableTarget;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.*;
+import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
+import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.EntityAIZombieAttack;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class CustomBaseZombie extends EntityZombie
@@ -58,6 +63,22 @@ public class CustomBaseZombie extends EntityZombie
     @Override
     protected boolean shouldBurnInDay()
     {
+        return false;
+    }
+
+    @Override
+    protected ResourceLocation getLootTable()
+    {
+        return null;
+    }
+
+    @Override
+    public boolean attackEntityAsMob(Entity entityIn)
+    {
+        if (this.getDistance(entityIn) < 1.0)
+        {
+            return super.attackEntityAsMob(entityIn);
+        }
         return false;
     }
 
