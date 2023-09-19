@@ -49,6 +49,18 @@ public class EntityAIEasternWander extends EntityAIWander
     }
 
     @Override
+    public void updateTask()
+    {
+        this.entity
+                .getLookHelper()
+                .setLookPosition(
+                        this.entity.posX, this.entity.posY, this.entity.posZ,
+                        (float) this.entity.getHorizontalFaceSpeed(),
+                        (float) this.entity.getVerticalFaceSpeed()
+                );
+    }
+
+    @Override
     protected Vec3d getPosition()
     {
         double randomEastMovement = 3 + rand.nextDouble() * 6;

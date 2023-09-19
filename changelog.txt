@@ -1,3 +1,10 @@
+Build: 1.5
+	patrick:
+	    Zombies now are attracted by sounds
+
+	    Zombies now make more eye contact
+
+=========
 Build: 1.4.1
 	patrick:
 	    Fix the FOV that gets too close after jumping
