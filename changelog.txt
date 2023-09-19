@@ -1,3 +1,16 @@
+Build: 1.6
+	patrick:
+	    Zombies can now only be injured with coherent objects
+
+	    Zombies make now louder sounds to attract others
+
+	    Zombies appear now more frequently
+
+	    Fix zombies appearing in water
+
+	    Fix zombies registry name
+
+=========
 Build: 1.5
 	patrick:
 	    Zombies now are attracted by sounds

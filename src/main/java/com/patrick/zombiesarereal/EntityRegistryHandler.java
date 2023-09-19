@@ -28,7 +28,7 @@ public class EntityRegistryHandler
                 .create()
                 .entity(HordeZombie.class)
                 .id(new ResourceLocation(ZombiesAreReal.MODID, "horde_zombie"), HORDE_ZOMBIE_ID)
-                .name("Horde Zombie")
+                .name("horde_zombie")
                 .tracker(80, 3, true)
                 .egg(0xFFFFFF, 0xAAAAAA) // Egg colors for the spawn egg.
                 .build();
@@ -41,7 +41,7 @@ public class EntityRegistryHandler
                 .create()
                 .entity(TerrainZombie.class)
                 .id(new ResourceLocation(ZombiesAreReal.MODID, "terrain_zombie"), TERRAIN_ZOMBIE_ID)
-                .name("Terrain Zombie")
+                .name("terrain_zombie")
                 .tracker(80, 3, true)
                 .egg(0xFFFFFF, 0xAAAAAA) // Egg colors for the spawn egg.
                 .build();

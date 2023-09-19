@@ -102,15 +102,15 @@ public class SoundAlertHelper
             case ITEM_BREAK:
                 return SCREAM_RANGE;
             case BLOCK_BROKEN:
-            case ENTITY_DEATH:
+            case ENTITY_HURT:
                 return SHOUTING_RANGE;
             case BLOCK_PLACED:
             case DOOR_TOGGLE:
                 return TALK_RANGE;
             case ITEM_USED:
-            case ENTITY_HURT:
             case ARROW_SHOOT:
             case ARROW_HIT:
+            case ENTITY_DEATH:
             default:
                 return WHISPER_RANGE;
         }

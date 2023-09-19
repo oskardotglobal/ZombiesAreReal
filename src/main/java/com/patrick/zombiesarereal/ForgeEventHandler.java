@@ -1,5 +1,6 @@
 package com.patrick.zombiesarereal;
 
+import com.patrick.zombiesarereal.helpers.CombatHelper;
 import com.patrick.zombiesarereal.helpers.KnockbackHelper;
 import com.patrick.zombiesarereal.helpers.SoundAlertHelper;
 import com.patrick.zombiesarereal.helpers.SpeedHelper;
@@ -10,6 +11,7 @@ import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -45,8 +47,8 @@ public class ForgeEventHandler
     public static void onPlayerAttackEntity(AttackEntityEvent event)
     {
         EntityPlayer player = event.getEntityPlayer();
-
-        if (player.getHeldItemMainhand().isEmpty() && event.isCancelable())
+        Item         heldItem = player.getHeldItemMainhand().getItem();
+        if (!CombatHelper.isCoherentWeapon(heldItem) && event.isCancelable())
         {
             event.setCanceled(true);
             Entity target = event.getTarget();

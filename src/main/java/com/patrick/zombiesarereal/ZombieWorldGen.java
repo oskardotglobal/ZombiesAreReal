@@ -29,15 +29,15 @@ public class ZombieWorldGen implements IWorldGenerator
 
     private void runGenerator(int chunkX, int chunkZ, World world, Random rand)
     {
-        if (rand.nextInt(10) == 0)
+        if (rand.nextInt(5) == 0)
         {
             int      x                     = chunkX * 16 + rand.nextInt(16);
             int      z                     = chunkZ * 16 + rand.nextInt(16);
             BlockPos topSolidOrLiquidBlock = world.getTopSolidOrLiquidBlock(new BlockPos(x, 0, z));
             int      y                     = topSolidOrLiquidBlock.getY();
-            world.getBlockState(topSolidOrLiquidBlock).getMaterial().isLiquid();
-            IBlockState blockState = world.getBlockState(topSolidOrLiquidBlock.down());
-            if (y > 0 && isAllowedBlock(blockState))
+            IBlockState blockState = world.getBlockState(topSolidOrLiquidBlock);
+            IBlockState blockStateUnder = world.getBlockState(topSolidOrLiquidBlock.down());
+            if (y > 0 && isAllowedBlock(blockStateUnder) && isAllowedBlock(blockState))
             {
                 EntityZombie zombie = new TerrainZombie(world);
                 zombie.setLocationAndAngles(x + 0.5, y, z + 0.5, rand.nextFloat() * 360.0F, 0.0F);
