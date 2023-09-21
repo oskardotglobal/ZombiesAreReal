@@ -30,7 +30,7 @@ public class CustomBaseZombie extends EntityZombie
     {
         super(worldIn);
         this.enablePersistence();
-        this.setHealth(getRandomHealth());
+        this.setHealth(makeRandomHealth());
     }
 
     @Override
@@ -55,8 +55,8 @@ public class CustomBaseZombie extends EntityZombie
     {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(FOLLOW_RANGE);
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(getRandomSpeed());
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(getRandomAttackDamage());
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(makeRandomSpeed());
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(makeRandomAttackDamage());
     }
 
     @Override
@@ -81,17 +81,17 @@ public class CustomBaseZombie extends EntityZombie
         return false;
     }
 
-    public float getRandomHealth()
+    private float makeRandomHealth()
     {
         return (float) (MIN_HEALTH + (MAX_HEALTH - MIN_HEALTH) * rand.nextDouble());
     }
 
-    public double getRandomSpeed()
+    private double makeRandomSpeed()
     {
         return MIN_SPEED + (MAX_SPEED - MIN_SPEED) * rand.nextDouble();
     }
 
-    public double getRandomAttackDamage()
+    private double makeRandomAttackDamage()
     {
         return MIN_ATTACK_DAMAGE + (MAX_ATTACK_DAMAGE - MIN_ATTACK_DAMAGE) * rand.nextDouble();
     }
