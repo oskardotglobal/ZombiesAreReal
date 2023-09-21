@@ -1,3 +1,30 @@
+Build: 1.7
+	patrick:
+	    Zombies do not avoid water anymore
+
+	    Zombies can not detect players if they do not move and are not really close
+
+	    Zombies attract other zombies when they chase a player
+
+	    Zombies attract other zombies when they watch a player
+
+	    Zombies are now stronger
+
+	    Fix zombies alerting them self of their own sounds
+
+	    Player jumps makes sounds that attract zombies, but not if they are sneaking
+
+	    Player jumps now consume more movement energy
+
+	    Player makes now sounds that attract zombies when they hit a block
+
+	    Player makes now sounds that attract zombies when they interact (right click actions)
+
+	    Player makes sounds that attract zombies when they walk or run, but not when sneaking
+
+	    Horde size reduced
+
+=========
 Build: 1.6
 	patrick:
 	    Zombies can now only be injured with coherent objects

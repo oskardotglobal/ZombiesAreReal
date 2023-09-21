@@ -1,6 +1,8 @@
 package com.patrick.zombiesarereal.helpers;
 
-import com.patrick.zombiesarereal.ai.EntityAIInvestigateSound;
+import com.patrick.utils.DebugUtil;
+import com.patrick.zombiesarereal.ZombiesAreReal;
+import com.patrick.zombiesarereal.ai.ZombieAIInvestigateSound;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAITasks;
@@ -15,11 +17,11 @@ import java.util.Map;
 
 public class SoundAlertHelper
 {
-    private static final int WHISPER_RANGE   = 16;
-    private static final int TALK_RANGE      = 32;
-    private static final int SHOUTING_RANGE  = 48;
-    private static final int SCREAM_RANGE    = 64;
-    private static final int EXPLOSION_RANGE = 256;
+    private static final int WHISPER_RANGE  = 16;
+    private static final int TALK_RANGE     = 32;
+    // TODO: Paths more far than FOLLOW_RANGE needs an stepped pathfinding ai
+    private static final int SHOUTING_RANGE = 48;
+    private static final int SCREAM_RANGE   = 64;
 
     private static final int SOUND_COOLDOWN = 2000; // milliseconds
 
@@ -45,11 +47,25 @@ public class SoundAlertHelper
         ANIMAL_BREED,
         HORSE_GALLOP,
         ITEM_BREAK,
+        ALERT_GROWL,
+        JUMP,
+        HIT,
+        INTERACT,
+        WALKING,
+        RUNNING,
     }
 
-    public static void onSound(Entity sourceEntity, World world, SoundSource soundSource, BlockPos soundPos)
+    /**
+     * Returns false if it is too soon to execute again
+     */
+    public static boolean onSound(Entity sourceEntity, World world, SoundSource soundSource, BlockPos soundPos)
     {
-        if (isTooSoon(sourceEntity, soundPos)) return;
+        System.out.println(soundSource);
+        System.out.println(soundPos);
+        if (world.isRemote) return false;
+        if (isTooSoon(soundPos)) return false;
+
+        if (ZombiesAreReal.DEBBUGING) DebugUtil.spawnNoteParticleAtBlockPos(world, soundPos);
 
         double alertRadius = getRadius(soundSource);
 
@@ -60,17 +76,17 @@ public class SoundAlertHelper
 
         for (EntityZombie zombie : zombies)
         {
-            alertZombieOfSound(zombie, soundPos);
+            if (!zombie.equals(sourceEntity))
+                alertZombieOfSound(zombie, soundPos);
         }
+        return true;
     }
 
-    private static boolean isTooSoon(Entity sourceEntity, BlockPos soundPos)
+    private static boolean isTooSoon(BlockPos soundPos)
     {
         if (soundDataMap.size() > 1000) soundDataMap.clear();
 
-        String key = sourceEntity != null
-                ? sourceEntity.getUniqueID().toString()
-                : makeBlockPosString(soundPos);
+        String    key  = makeBlockPosString(soundPos);
         SoundData data = soundDataMap.computeIfAbsent(key, k -> new SoundData());
 
         long currentTime = System.currentTimeMillis();
@@ -87,7 +103,7 @@ public class SoundAlertHelper
     {
         return soundPos != null
                 ? soundPos.getX() + "," + soundPos.getY() + "," + soundPos.getZ()
-                : "fallback";
+                : "null";
     }
 
     private static int getRadius(SoundSource soundSource)
@@ -96,20 +112,25 @@ public class SoundAlertHelper
         {
             case EXPLOSION:
             case ANIMAL_BREED: // TO SIMULATE ZOMBIES SMELLING THE ANIMALS
-                return EXPLOSION_RANGE;
             case CRISTAL_BROKEN:
             case HORSE_GALLOP:
             case ITEM_BREAK:
-                return SCREAM_RANGE;
+            case ALERT_GROWL:
+//                return SCREAM_RANGE; // TODO: Paths more far than FOLLOW_RANGE needs an stepped pathfinding ai
             case BLOCK_BROKEN:
             case ENTITY_HURT:
-                return SHOUTING_RANGE;
+            case RUNNING:
+//                return SHOUTING_RANGE; // TODO: Paths more far than FOLLOW_RANGE needs an stepped pathfinding ai
             case BLOCK_PLACED:
             case DOOR_TOGGLE:
+            case HIT:
                 return TALK_RANGE;
+            case WALKING:
+            case INTERACT:
             case ITEM_USED:
             case ARROW_SHOOT:
             case ARROW_HIT:
+            case JUMP:
             case ENTITY_DEATH:
             default:
                 return WHISPER_RANGE;
@@ -123,9 +144,9 @@ public class SoundAlertHelper
             if (taskEntry != null)
             {
                 EntityAIBase task = taskEntry.action;
-                if (task instanceof EntityAIInvestigateSound)
+                if (task instanceof ZombieAIInvestigateSound)
                 {
-                    ((EntityAIInvestigateSound) task).setSoundPos(soundPos);
+                    ((ZombieAIInvestigateSound) task).setSoundPos(soundPos);
                 }
             }
         }

@@ -1,9 +1,6 @@
 package com.patrick.zombiesarereal;
 
-import com.patrick.zombiesarereal.helpers.CombatHelper;
-import com.patrick.zombiesarereal.helpers.KnockbackHelper;
-import com.patrick.zombiesarereal.helpers.SoundAlertHelper;
-import com.patrick.zombiesarereal.helpers.SpeedHelper;
+import com.patrick.zombiesarereal.helpers.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.entity.Entity;
@@ -44,9 +41,39 @@ public class ForgeEventHandler
     }
 
     @SubscribeEvent
+    public static void onPlayerTick(TickEvent.PlayerTickEvent event)
+    {
+        EntityPlayer player = event.player;
+        if (event.phase == TickEvent.Phase.END) return;
+        if (player.world.isRemote) return;
+
+        if (PlayerLocationHelper.hasChangePosition(player) && !player.isSneaking())
+        {
+            if (player.isSprinting())
+            {
+                SoundAlertHelper.onSound(
+                        player,
+                        player.world,
+                        SoundAlertHelper.SoundSource.RUNNING,
+                        player.getPosition()
+                );
+            }
+            else
+            {
+                SoundAlertHelper.onSound(
+                        player,
+                        player.world,
+                        SoundAlertHelper.SoundSource.WALKING,
+                        player.getPosition()
+                );
+            }
+        }
+    }
+
+    @SubscribeEvent
     public static void onPlayerAttackEntity(AttackEntityEvent event)
     {
-        EntityPlayer player = event.getEntityPlayer();
+        EntityPlayer player   = event.getEntityPlayer();
         Item         heldItem = player.getHeldItemMainhand().getItem();
         if (!CombatHelper.isCoherentWeapon(heldItem) && event.isCancelable())
         {
@@ -63,20 +90,39 @@ public class ForgeEventHandler
     }
 
     @SubscribeEvent
+    public static void onBlockStartBreak(PlayerInteractEvent.LeftClickBlock event)
+    {
+        SoundAlertHelper.onSound(
+                event.getEntityPlayer(),
+                event.getEntityPlayer().world,
+                SoundAlertHelper.SoundSource.HIT,
+                event.getPos().up()
+        );
+    }
+
+    @SubscribeEvent
     public static void onPlayerRightClickEntity(PlayerInteractEvent.EntityInteract event)
     {
         EntityPlayer player = event.getEntityPlayer();
         Entity       target = event.getTarget();
         KnockbackHelper.applyKnockbackToLivingEntity(player, target, true);
+
+        SoundAlertHelper.onSound(
+                event.getEntityPlayer(),
+                event.getWorld(),
+                SoundAlertHelper.SoundSource.INTERACT,
+                event.getPos()
+        );
     }
 
     @SubscribeEvent
     public static void onPlayerJump(LivingEvent.LivingJumpEvent event)
     {
-        if (event.getEntity() instanceof EntityPlayer)
+        if (event.getEntity() instanceof EntityPlayer && !event.getEntity().isSneaking())
         {
             EntityPlayer player = (EntityPlayer) event.getEntity();
             SpeedHelper.onPlayerJumped(player);
+            SoundAlertHelper.onSound(player, player.world, SoundAlertHelper.SoundSource.JUMP, player.getPosition());
         }
     }
 

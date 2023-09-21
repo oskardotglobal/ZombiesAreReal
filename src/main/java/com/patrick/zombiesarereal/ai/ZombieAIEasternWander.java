@@ -1,16 +1,16 @@
 package com.patrick.zombiesarereal.ai;
 
-import net.minecraft.entity.EntityCreature;
+import com.patrick.zombiesarereal.entities.CustomBaseZombie;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.Random;
 
-public class EntityAIEasternWander extends EntityAIWander
+public class ZombieAIEasternWander extends EntityAIWander
 {
     private final Random rand;
 
-    public EntityAIEasternWander(EntityCreature creature, double speedIn, int chance)
+    public ZombieAIEasternWander(CustomBaseZombie creature, double speedIn, int chance)
     {
         super(creature, speedIn, chance);
         rand = new Random();
@@ -40,9 +40,9 @@ public class EntityAIEasternWander extends EntityAIWander
         }
         else
         {
-            this.x          = vec3d.x;
-            this.y          = vec3d.y;
-            this.z          = vec3d.z;
+            this.x = vec3d.x;
+            this.y = vec3d.y;
+            this.z = vec3d.z;
             this.mustUpdate = false;
             return true;
         }

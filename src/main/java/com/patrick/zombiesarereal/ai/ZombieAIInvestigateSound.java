@@ -1,18 +1,18 @@
 package com.patrick.zombiesarereal.ai;
 
+import com.patrick.zombiesarereal.entities.CustomBaseZombie;
 import net.minecraft.entity.ai.EntityAIWander;
-import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.Random;
 
-public class EntityAIInvestigateSound extends EntityAIWander
+public class ZombieAIInvestigateSound extends EntityAIWander
 {
     private       BlockPos soundPos;
     private final Random   rand;
 
-    public EntityAIInvestigateSound(EntityZombie zombie, double speed)
+    public ZombieAIInvestigateSound(CustomBaseZombie zombie, double speed)
     {
         super(zombie, speed, 1);
         this.rand = new Random();

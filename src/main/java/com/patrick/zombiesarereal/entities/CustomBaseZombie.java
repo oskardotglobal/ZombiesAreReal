@@ -1,13 +1,11 @@
 package com.patrick.zombiesarereal.entities;
 
-import com.patrick.zombiesarereal.ai.EntityAIEasternWander;
-import com.patrick.zombiesarereal.ai.EntityAIInvestigateSound;
-import com.patrick.zombiesarereal.ai.EntityAINonSneakingNearestAttackableTarget;
+import com.patrick.zombiesarereal.ai.ZombieAIEasternWander;
+import com.patrick.zombiesarereal.ai.ZombieAIInvestigateSound;
+import com.patrick.zombiesarereal.ai.ZombieAINearestAttackablePlayer;
+import com.patrick.zombiesarereal.ai.ZombieAIWatchClosest;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
-import net.minecraft.entity.ai.EntityAIWanderAvoidWater;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.ai.EntityAIZombieAttack;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,13 +14,15 @@ import net.minecraft.world.World;
 
 public class CustomBaseZombie extends EntityZombie
 {
-    public static final int    FOLLOW_RANGE                   = 20;
+    public static final int    FOLLOW_RANGE                   = 32;
+    public static final int    VISION_RANGE                   = 16;
+    public static final int    TARGET_RANGE                   = 3;
     public static final double MIN_SPEED                      = 0.20D;
     public static final double MAX_SPEED                      = 0.40D;
     public static final double MAX_HEALTH                     = 10.0F;
     public static final double MIN_HEALTH                     = 1.0F;
-    public static final double MIN_ATTACK_DAMAGE              = 1.0F;
-    public static final double MAX_ATTACK_DAMAGE              = 8.0F;
+    public static final double MIN_ATTACK_DAMAGE              = 4.0F;
+    public static final double MAX_ATTACK_DAMAGE              = 20.0F;
     public static final double PASSIVE_SPEED_MULTIPLIER       = 0.4D;
     public static final double INVESTIGATION_SPEED_MULTIPLIER = 0.8D;
 
@@ -44,12 +44,10 @@ public class CustomBaseZombie extends EntityZombie
     {
 
         this.tasks.addTask(2, new EntityAIZombieAttack(this, 1.0D, false));
-        this.targetTasks.addTask(2, new EntityAINonSneakingNearestAttackableTarget(this, EntityPlayer.class, true));
-        this.tasks.addTask(3, new EntityAIInvestigateSound(this, INVESTIGATION_SPEED_MULTIPLIER));
-        this.tasks.addTask(4, new EntityAIMoveTowardsRestriction(this, PASSIVE_SPEED_MULTIPLIER));
-        this.tasks.addTask(6, new EntityAIEasternWander(this, PASSIVE_SPEED_MULTIPLIER, 1));
-        this.tasks.addTask(7, new EntityAIWanderAvoidWater(this, PASSIVE_SPEED_MULTIPLIER));
-        this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, FOLLOW_RANGE));
+        this.targetTasks.addTask(2, new ZombieAINearestAttackablePlayer(this, EntityPlayer.class, true));
+        this.tasks.addTask(3, new ZombieAIInvestigateSound(this, INVESTIGATION_SPEED_MULTIPLIER));
+        this.tasks.addTask(6, new ZombieAIEasternWander(this, PASSIVE_SPEED_MULTIPLIER, 1));
+        this.tasks.addTask(8, new ZombieAIWatchClosest(this, EntityPlayer.class, VISION_RANGE));
     }
 
     @Override

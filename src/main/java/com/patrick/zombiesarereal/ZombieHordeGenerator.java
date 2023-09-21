@@ -14,6 +14,7 @@ public class ZombieHordeGenerator
 {
     private static final int    HORDE_INITIAL_DISTANCE = 97;
     private static final Random rand                   = new Random();
+    public static final  int    HORDE_SIZE             = 50;
 
     public static void generate(World world)
     {
@@ -21,7 +22,7 @@ public class ZombieHordeGenerator
         {
             BlockPos playerPos = player.getPosition();
             int         pointX           = playerPos.getX() - HORDE_INITIAL_DISTANCE;
-            for (int i = 0; i < 75; i++)
+            for (int i = 0; i < HORDE_SIZE; i++)
             {
                 int         randomPointX = pointX - (rand.nextInt(8) - 4);
                 int         randomPointZ = playerPos.getZ() - (rand.nextInt(48) - 24);

@@ -32,7 +32,7 @@ public class SpeedHelper
         PlayerData data = playerDataMap.computeIfAbsent(player.getUniqueID(), k -> new PlayerData());
 
         data.jumpCooldown = JUMP_COOLDOWN;
-        data.energy       = Math.max(0, data.energy - 20);
+        data.energy       = Math.max(0, data.energy - 40);
         applySpeedModifier(player, 0.075);
     }
 
