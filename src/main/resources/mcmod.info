@@ -3,7 +3,7 @@
   "modid": "zombiesarereal",
   "name": "Zombies Are Real",
   "description": "Enhance the spawning and behavior of zombies to make them feel coherent.",
-  "version": "1.7",
+  "version": "1.8",
   "mcversion": "${mcversion}",
   "url": "https://github.com/P-Gruber/ZombiesAreReal.git",
   "updateUrl": "",

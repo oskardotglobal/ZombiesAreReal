@@ -1,3 +1,10 @@
+Build: 1.8
+	patrick:
+	    Player gets tired after fighting too much
+
+	    Players are slower when walking backward
+
+=========
 Build: 1.7
 	patrick:
 	    Zombies do not avoid water anymore

@@ -13,13 +13,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class KnockbackHelper
 {
-    public static void applyKnockbackToLivingEntity(EntityPlayer player, Entity target, boolean swingArm)
+    public static boolean applyKnockbackToLivingEntity(EntityPlayer player, Entity target, boolean swingArm)
     {
         if (target instanceof EntityLivingBase && !isNonLivingEntity(target))
         {
             applyKnockbackToLivingEntity(player, target);
             if (swingArm) swingArm(player);
+            return true;
         }
+        return false;
     }
 
     private static void applyKnockbackToLivingEntity(EntityPlayer player, Entity target)
