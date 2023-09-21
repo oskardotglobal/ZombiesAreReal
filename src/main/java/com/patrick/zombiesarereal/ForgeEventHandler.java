@@ -44,7 +44,20 @@ public class ForgeEventHandler
     public static void onPlayerTick(TickEvent.PlayerTickEvent event)
     {
         EntityPlayer player = event.player;
+
+        if (player.world.isRemote)
+        {
+            if (player.moveForward < 0)
+            {
+                float speedReductionFactor = 0.5F;
+                player.motionX *= speedReductionFactor;
+                player.motionZ *= speedReductionFactor;
+            }
+        }
+
         if (event.phase == TickEvent.Phase.END) return;
+
+        ArmsEnergyHelper.onPlayerTick(player);
         if (player.world.isRemote) return;
 
         if (PlayerLocationHelper.hasChangePosition(player) && !player.isSneaking())
@@ -75,6 +88,14 @@ public class ForgeEventHandler
     {
         EntityPlayer player   = event.getEntityPlayer();
         Item         heldItem = player.getHeldItemMainhand().getItem();
+
+        if (!ArmsEnergyHelper.canHit(player))
+        {
+            event.setCanceled(true);
+            return;
+        }
+        else ArmsEnergyHelper.onPlayerHit(player);
+
         if (!CombatHelper.isCoherentWeapon(heldItem) && event.isCancelable())
         {
             event.setCanceled(true);
@@ -105,7 +126,17 @@ public class ForgeEventHandler
     {
         EntityPlayer player = event.getEntityPlayer();
         Entity       target = event.getTarget();
-        KnockbackHelper.applyKnockbackToLivingEntity(player, target, true);
+
+        if (ArmsEnergyHelper.canHit(player))
+        {
+            boolean knockbackApplied = KnockbackHelper.applyKnockbackToLivingEntity(
+                    player, target, true
+            );
+            if (knockbackApplied)
+            {
+                ArmsEnergyHelper.onPlayerHit(player);
+            }
+        }
 
         SoundAlertHelper.onSound(
                 event.getEntityPlayer(),
