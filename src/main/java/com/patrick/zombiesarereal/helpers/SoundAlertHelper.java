@@ -60,8 +60,6 @@ public class SoundAlertHelper
      */
     public static boolean onSound(Entity sourceEntity, World world, SoundSource soundSource, BlockPos soundPos)
     {
-        System.out.println(soundSource);
-        System.out.println(soundPos);
         if (world.isRemote) return false;
         if (isTooSoon(soundPos)) return false;
 
