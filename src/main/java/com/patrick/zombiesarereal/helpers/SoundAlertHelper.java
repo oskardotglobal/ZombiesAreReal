@@ -1,6 +1,6 @@
 package com.patrick.zombiesarereal.helpers;
 
-import com.patrick.utils.DebugUtil;
+import com.patrick.zombiesarereal.utils.DebugUtil;
 import com.patrick.zombiesarereal.ZombiesAreReal;
 import com.patrick.zombiesarereal.ai.ZombieAIInvestigateSound;
 import net.minecraft.entity.Entity;

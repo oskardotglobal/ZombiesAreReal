@@ -1,4 +1,4 @@
-package com.patrick.utils;
+package com.patrick.zombiesarereal.utils;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.play.server.SPacketParticles;
