@@ -1,3 +1,16 @@
+Build: 1.9
+	patrick:
+        Players can hit a little faster
+
+        Zombies have now a localized damage system
+
+        Zombies loose speed if a leg is damaged
+
+        Zombies loose attack damage if an arm is damaged
+
+        Zombies are killed if the head health reach zero
+
+=========
 Build: 1.8
 	patrick:
 	    Player gets tired after fighting too much

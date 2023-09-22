@@ -10,8 +10,8 @@ import java.util.UUID;
 public class ArmsEnergyHelper
 {
     private static final int MAX_ENERGY       = 1500; // in ticks
-    private static final int MIN_HIT_COOLDOWN = 20; // in seconds
-    private static final int MAX_HIT_COOLDOWN = 100; // in seconds
+    private static final int MIN_HIT_COOLDOWN = 15; // in ticks
+    private static final int MAX_HIT_COOLDOWN = 100; // in ticks
     public static final  int HIT_ENERGY_COST  = 80;
 
     private static final Map<UUID, PlayerData> playerDataMap = new HashMap<>();

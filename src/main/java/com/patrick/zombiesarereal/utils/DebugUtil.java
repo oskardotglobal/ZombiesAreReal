@@ -1,10 +1,13 @@
 package com.patrick.zombiesarereal.utils;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.play.server.SPacketParticles;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 public class DebugUtil
@@ -31,6 +34,13 @@ public class DebugUtil
                 player.connection.sendPacket(packet);
             }
         }
+    }
+
+    public static void showChat(EntityPlayer player, String message)
+    {
+        TextComponentString text = new TextComponentString(message);
+        text.getStyle().setColor(TextFormatting.DARK_GRAY);
+        player.sendMessage(text);
     }
 
 }

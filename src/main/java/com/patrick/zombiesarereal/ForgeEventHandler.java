@@ -1,5 +1,6 @@
 package com.patrick.zombiesarereal;
 
+import com.patrick.zombiesarereal.entities.CustomBaseZombie;
 import com.patrick.zombiesarereal.helpers.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
@@ -101,6 +102,20 @@ public class ForgeEventHandler
             event.setCanceled(true);
             Entity target = event.getTarget();
             KnockbackHelper.applyKnockbackToLivingEntity(player, target, false);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onLivingHurt(LivingHurtEvent event)
+    {
+        if (event.getEntity() instanceof CustomBaseZombie)
+        {
+            CustomBaseZombie zombie = (CustomBaseZombie) event.getEntity();
+            if (event.getSource().getTrueSource() instanceof EntityPlayer)
+            {
+                EntityPlayer player = (EntityPlayer) event.getSource().getTrueSource();
+                CombatHelper.tryToLocalizeDamage(zombie, player, event);
+            }
         }
     }
 
