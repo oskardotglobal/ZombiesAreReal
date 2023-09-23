@@ -1,8 +1,8 @@
 package com.patrick.zombiesarereal.helpers;
 
-import com.patrick.zombiesarereal.utils.DebugUtil;
 import com.patrick.zombiesarereal.ZombiesAreReal;
 import com.patrick.zombiesarereal.ai.ZombieAIInvestigateSound;
+import com.patrick.zombiesarereal.utils.DebugUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAITasks;
@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class SoundAlertHelper
 {
@@ -26,6 +27,7 @@ public class SoundAlertHelper
     private static final int SOUND_COOLDOWN = 2000; // milliseconds
 
     private static final Map<String, SoundData> soundDataMap = new HashMap<>();
+    private static final Random                 rand         = new Random();
 
     private static class SoundData
     {
@@ -61,7 +63,7 @@ public class SoundAlertHelper
     public static boolean onSound(Entity sourceEntity, World world, SoundSource soundSource, BlockPos soundPos)
     {
         if (world.isRemote) return false;
-        if (isTooSoon(soundPos)) return false;
+        if (isTooSoon(soundPos, soundSource)) return false;
 
         if (ZombiesAreReal.DEBBUGING) DebugUtil.spawnNoteParticleAtBlockPos(world, soundPos);
 
@@ -80,9 +82,14 @@ public class SoundAlertHelper
         return true;
     }
 
-    private static boolean isTooSoon(BlockPos soundPos)
+    private static boolean isTooSoon(BlockPos soundPos, SoundSource soundSource)
     {
         if (soundDataMap.size() > 1000) soundDataMap.clear();
+
+        if (soundSource == SoundSource.WALKING || soundSource == SoundSource.RUNNING)
+        {
+            return rand.nextInt(10) != 0;
+        }
 
         String    key  = makeBlockPosString(soundPos);
         SoundData data = soundDataMap.computeIfAbsent(key, k -> new SoundData());
