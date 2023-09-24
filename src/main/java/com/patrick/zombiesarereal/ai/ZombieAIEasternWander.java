@@ -13,6 +13,7 @@ public class ZombieAIEasternWander extends EntityAIWander
     public ZombieAIEasternWander(CustomBaseZombie creature, double speedIn, int chance)
     {
         super(creature, speedIn, chance);
+        setMutexBits(2);
         rand = new Random();
     }
 

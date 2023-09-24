@@ -15,6 +15,7 @@ public class ZombieAIInvestigateSound extends EntityAIWander
     public ZombieAIInvestigateSound(CustomBaseZombie zombie, double speed)
     {
         super(zombie, speed, 1);
+        setMutexBits(2);
         this.rand = new Random();
     }
 
@@ -26,6 +27,10 @@ public class ZombieAIInvestigateSound extends EntityAIWander
     @Override
     public boolean shouldExecute()
     {
+        if (this.entity.getAttackTarget() != null)
+        {
+            return false;
+        }
         if (this.soundPos != null)
         {
             Vec3d nearSoundPosition = randomizePosition(soundPos);
@@ -36,6 +41,17 @@ public class ZombieAIInvestigateSound extends EntityAIWander
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean shouldContinueExecuting()
+    {
+        if (this.entity.getAttackTarget() != null)
+        {
+            entity.getNavigator().clearPath();
+            return false;
+        }
+        return super.shouldContinueExecuting();
     }
 
     private Vec3d randomizePosition(BlockPos soundPos)

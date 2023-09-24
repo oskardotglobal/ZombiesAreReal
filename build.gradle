@@ -13,7 +13,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '1.9'
+version = '1.9.1'
 group = 'com.patrick.zombiesarereal' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'ZombiesAreReal'
 
@@ -87,7 +87,7 @@ jar {
         attributes([
             "Specification-Title": "ZombiesAreReal",
             "Specification-Vendor": "zombiesarerealpatrick",
-            "Specification-Version": "1.9", // We are version 1 of ourselves
+            "Specification-Version": "1.9.1", // We are version 1 of ourselves
             "Implementation-Title": project.name,
             "Implementation-Version": "${version}",
             "Implementation-Vendor" :"ZombiesAreReal",

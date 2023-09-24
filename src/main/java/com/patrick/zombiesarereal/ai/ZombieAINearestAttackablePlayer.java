@@ -1,6 +1,7 @@
 package com.patrick.zombiesarereal.ai;
 
 import com.patrick.zombiesarereal.entities.CustomBaseZombie;
+import com.patrick.zombiesarereal.helpers.PlayerLocationHelper;
 import com.patrick.zombiesarereal.helpers.SoundAlertHelper;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.monster.EntityZombie;
@@ -8,15 +9,11 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class ZombieAINearestAttackablePlayer extends EntityAINearestAttackableTarget<EntityPlayer>
 {
-    private double  lastXPos     = 0;
-    private double  lastZPos     = 0;
-    private boolean isFirstCheck = true;
-
     public ZombieAINearestAttackablePlayer(
-            EntityZombie creature, Class<EntityPlayer> classTarget,
-            boolean checkSight)
+            EntityZombie creature, Class<EntityPlayer> classTarget, boolean checkSight
+    )
     {
-        super(creature, classTarget, checkSight);
+        super(creature, classTarget, 0, checkSight, false, null);
     }
 
     @Override
@@ -24,13 +21,8 @@ public class ZombieAINearestAttackablePlayer extends EntityAINearestAttackableTa
     {
         if (super.shouldExecute())
         {
-            EntityPlayer nearestPlayer = this.taskOwner.world.getNearestPlayerNotCreative(
-                    this.taskOwner,
-                    CustomBaseZombie.VISION_RANGE
-            );
-            if (nearestPlayer == null) return false;
-            if (playerIsSneakingAndNotCloseEnough(nearestPlayer)) return false;
-            if (playerIsNotMoving(nearestPlayer)) return false;
+            if (playerIsSneakingAndNotCloseEnough(targetEntity)) return false;
+            if (!PlayerLocationHelper.hasChangePosition(targetEntity)) return false;
             return true;
         }
         return false;
@@ -72,24 +64,5 @@ public class ZombieAINearestAttackablePlayer extends EntityAINearestAttackableTa
     private boolean playerIsSneakingAndNotCloseEnough(EntityPlayer player)
     {
         return player.isSneaking() && this.taskOwner.getDistance(player) > CustomBaseZombie.TARGET_RANGE;
-    }
-
-    private boolean playerIsNotMoving(EntityPlayer player)
-    {
-        if (isFirstCheck)
-        {
-            lastXPos     = player.posX;
-            lastZPos     = player.posZ;
-            isFirstCheck = false;
-        }
-        if (player.posX == lastXPos && player.posZ == lastZPos)
-        {
-            return true;
-        }
-
-        lastXPos = player.posX;
-        lastZPos = player.posZ;
-
-        return false;
     }
 }

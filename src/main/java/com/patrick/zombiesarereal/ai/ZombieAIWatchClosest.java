@@ -14,6 +14,7 @@ public class ZombieAIWatchClosest extends EntityAIWatchClosest
     public ZombieAIWatchClosest(CustomBaseZombie entityIn, Class<? extends Entity> watchTargetClass, float maxDistance)
     {
         super(entityIn, watchTargetClass, maxDistance);
+        setMutexBits(1);
     }
 
     @Override

@@ -60,8 +60,8 @@ public class CustomBaseZombie extends EntityZombie
     protected void initEntityAI()
     {
 
+        this.targetTasks.addTask(1, new ZombieAINearestAttackablePlayer(this, EntityPlayer.class, true));
         this.tasks.addTask(2, new EntityAIZombieAttack(this, 1.0D, false));
-        this.targetTasks.addTask(2, new ZombieAINearestAttackablePlayer(this, EntityPlayer.class, true));
         this.tasks.addTask(3, new ZombieAIInvestigateSound(this, INVESTIGATION_SPEED_MULTIPLIER));
         this.tasks.addTask(6, new ZombieAIEasternWander(this, PASSIVE_SPEED_MULTIPLIER, 1));
         this.tasks.addTask(8, new ZombieAIWatchClosest(this, EntityPlayer.class, VISION_RANGE));

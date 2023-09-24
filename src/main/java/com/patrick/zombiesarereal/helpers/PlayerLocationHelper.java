@@ -16,11 +16,16 @@ public class PlayerLocationHelper
         BlockPos currentPos = player.getPosition();
         BlockPos lastPos    = lastPlayerPositions.computeIfAbsent(player.getUniqueID(), k -> currentPos);
 
-        if (!lastPos.equals(currentPos))
-        {
-            lastPlayerPositions.put(player.getUniqueID(), currentPos);
-            return true;
-        }
-        return false;
+        return !lastPos.equals(currentPos);
+    }
+
+    public static void setPlayerPosition(EntityPlayer player)
+    {
+        lastPlayerPositions.put(player.getUniqueID(), player.getPosition());
+    }
+
+    public static void clearPlayerData(EntityPlayer player)
+    {
+        lastPlayerPositions.remove(player.getUniqueID());
     }
 }

@@ -22,6 +22,7 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 @EventBusSubscriber
@@ -82,6 +83,15 @@ public class ForgeEventHandler
                 );
             }
         }
+
+        PlayerLocationHelper.setPlayerPosition(player);
+    }
+
+    @SubscribeEvent
+    public void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent event)
+    {
+        EntityPlayer player = event.player;
+        PlayerLocationHelper.clearPlayerData(player);
     }
 
     @SubscribeEvent
