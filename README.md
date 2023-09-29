@@ -8,3 +8,7 @@ Step into a Minecraft dimension 🌍 where zombies have taken the next evolution
 - Twilight Terrors 🌆: As dusk falls and dawn breaks, prepare for intense zombie horde invasions 🌇.
 - Stealthy Spawns 🌲: Zombies won't just pop up in front of you. Instead, they spawn with the terrain, emerging as coherent hordes from the landscape.
 - Noise Mechanism: Players can sneak to avoid zombies
+
+## Supported Versions
+
+- 1.12.2
