@@ -1,7 +1,8 @@
 # Zombies Are Real 🧟‍♂️🌌
 Step into a Minecraft dimension 🌍 where zombies have taken the next evolutionary step! Our mod overhauls their origins and instincts, ensuring every rendezvous is a spine-chilling encounter 💓.
 
-Note: Best in combination with my other mod, VanillaRemover (https://github.com/P-Gruber/VanillaRemover) designed to remove all spawn registries for vanilla creatures, preventing their natural spawning.
+Note: Best in combination with my other mod, VanillaRemover (https://github.com/P-Gruber/VanillaRemover). 
+      This mod aims to remove all spawn registries for vanilla creatures, preventing their natural spawning.
 
 ## Main Features 🎮
 - Freshly Risen Zombies 🧟‍♀️: We've retired the vanilla zombies. In their place, encounter our custom undead. (Note: Mods requiring vanilla zombies may face compatibility issues ❌.)
