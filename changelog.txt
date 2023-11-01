@@ -1,3 +1,8 @@
+Build: 1.9.2
+	patrick:
+        Remove localized damage system for projectiles
+
+=========
 Build: 1.9.1
 	patrick:
         Fix players making too many sound alerts when moving
