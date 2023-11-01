@@ -1,5 +1,5 @@
 # Zombies Are Real 🧟‍♂️🌌
-Step into a Minecraft dimension where zombies have taken the next evolutionary step! Our mod overhauls their origins and instincts, ensuring every rendezvous is a spine-chilling encounter.
+Step into a Minecraft world where zombies have taken the next evolutionary step! Our mod overhauls their origins and instincts, ensuring every rendezvous is a spine-chilling encounter.
 
 Note: This mod is best used in combination with my other mod, VanillaRemover (https://github.com/P-Gruber/VanillaRemover), which eliminates spawn registries for vanilla creatures, allowing only zombies to spawn.
 
