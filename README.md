@@ -25,3 +25,5 @@ Note: This mod is best used in combination with my other mod, VanillaRemover (ht
 ## Supported Versions
 
 - 1.12.2
+
+Download it on CurseForge! https://legacy.curseforge.com/minecraft/mc-mods/zombies-are-real
