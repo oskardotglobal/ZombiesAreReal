@@ -2,7 +2,11 @@
   "compatibilityLevel": "JAVA_8",
   "package": "com.patrick.zombiesarereal.mixin",
   "refmap": "refmap.zombiesarereal.json",
-  "mixins": ["EntityZombieMixin"],
-  "client": [],
+  "mixins": [
+    "EntityZombieMixin"
+  ],
+  "client": [
+    "EntityPlayerMixin"
+  ],
   "server": []
 }

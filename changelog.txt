@@ -1,4 +1,9 @@
 =========
+Build: 2.0.1
+	oskardotglobal:
+        Hide player nametags
+
+=========
 Build: 2.0.0
 	oskardotglobal:
         Drastically increase zombie hp

@@ -3,7 +3,7 @@
   "modid": "zombiesarereal",
   "name": "Zombies Are Real",
   "description": "Enhance the spawning and behavior of zombies to make them feel coherent.",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "mcversion": "${mcversion}",
   "url": "https://github.com/oskardotglobal/ZombiesAreReal.git",
   "updateUrl": "",
