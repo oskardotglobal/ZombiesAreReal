@@ -15,30 +15,24 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 import java.util.Objects;
 import java.util.Random;
 
-public class ZombieWorldGen implements IWorldGenerator
-{
+public class ZombieWorldGen implements IWorldGenerator {
     @Override
     public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator,
-                         IChunkProvider chunkProvider)
-    {
-        if (world.provider.getDimension() == 0)
-        {
+                         IChunkProvider chunkProvider) {
+        if (world.provider.getDimension() == 0) {
             this.runGenerator(chunkX, chunkZ, world, random);
         }
     }
 
-    private void runGenerator(int chunkX, int chunkZ, World world, Random rand)
-    {
-        if (rand.nextInt(5) == 0)
-        {
-            int      x                     = chunkX * 16 + rand.nextInt(16);
-            int      z                     = chunkZ * 16 + rand.nextInt(16);
+    private void runGenerator(int chunkX, int chunkZ, World world, Random rand) {
+        if (rand.nextInt(5) == 0) {
+            int x = chunkX * 16 + rand.nextInt(16);
+            int z = chunkZ * 16 + rand.nextInt(16);
             BlockPos topSolidOrLiquidBlock = world.getTopSolidOrLiquidBlock(new BlockPos(x, 0, z));
-            int      y                     = topSolidOrLiquidBlock.getY();
+            int y = topSolidOrLiquidBlock.getY();
             IBlockState blockState = world.getBlockState(topSolidOrLiquidBlock);
             IBlockState blockStateUnder = world.getBlockState(topSolidOrLiquidBlock.down());
-            if (y > 0 && isAllowedBlock(blockStateUnder) && isAllowedBlock(blockState))
-            {
+            if (y > 0 && isAllowedBlock(blockStateUnder) && isAllowedBlock(blockState)) {
                 EntityZombie zombie = new TerrainZombie(world);
                 zombie.setLocationAndAngles(x + 0.5, y, z + 0.5, rand.nextFloat() * 360.0F, 0.0F);
                 world.spawnEntity(zombie);
@@ -46,8 +40,7 @@ public class ZombieWorldGen implements IWorldGenerator
         }
     }
 
-    private static boolean isAllowedBlock(IBlockState state)
-    {
+    private static boolean isAllowedBlock(IBlockState state) {
         Block block = state.getBlock();
 
         // List of blocks we consider as part of "trees".
@@ -60,16 +53,13 @@ public class ZombieWorldGen implements IWorldGenerator
         };
 
         // Check against water
-        if (block == Blocks.WATER)
-        {
+        if (block == Blocks.WATER) {
             return false;
         }
 
         // Check against tree blocks
-        for (ResourceLocation treeBlock : treeBlocks)
-        {
-            if (Objects.equals(block.getRegistryName(), treeBlock))
-            {
+        for (ResourceLocation treeBlock : treeBlocks) {
+            if (Objects.equals(block.getRegistryName(), treeBlock)) {
                 return false;
             }
         }

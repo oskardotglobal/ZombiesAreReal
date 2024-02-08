@@ -1,3 +1,11 @@
+=========
+Build: 2.0.0
+	oskardotglobal:
+        Drastically increase zombie hp
+        Disable camera swing on hit
+        Reformat code with IntelliJ
+
+=========
 Build: 1.9.2
 	patrick:
         Remove localized damage system for projectiles
@@ -102,25 +110,3 @@ Build: 1.4.0
 Build: 1.3.0
 	patrick:
 	    Players slow down after jumping
-
-	    Players get exhausted after running or jumping too much
-
-=========
-Build: 1.2.0
-	patrick:
-	    Players can sneak to avoid zombies
-
-	    Players can push zombies away
-
-	    Players can not hurt zombies with an empty hand
-
-=========
-Build: 1.1.0
-	patrick:
-	    Zombies now get a random health, attack damage and speed value
-
-	    Zombies now do not look down in an unnatural way
-
-	    Zombies now do not change direction while attacking
-
-	    Zombies now can not see you that far

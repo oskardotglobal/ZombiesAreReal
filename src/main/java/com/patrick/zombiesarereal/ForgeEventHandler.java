@@ -26,31 +26,24 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 @EventBusSubscriber
-public class ForgeEventHandler
-{
+public class ForgeEventHandler {
 
     @SubscribeEvent
-    public static void onWorldTick(TickEvent.WorldTickEvent event)
-    {
-        if (!event.world.isRemote && event.phase == TickEvent.Phase.START)
-        {
+    public static void onWorldTick(TickEvent.WorldTickEvent event) {
+        if (!event.world.isRemote && event.phase == TickEvent.Phase.START) {
             long timeOfDay = event.world.getWorldTime() % 24000;
-            if (timeOfDay == 13000 || timeOfDay == 23000)
-            {
+            if (timeOfDay == 13000 || timeOfDay == 23000) {
                 ZombieHordeGenerator.generate(event.world);
             }
         }
     }
 
     @SubscribeEvent
-    public static void onPlayerTick(TickEvent.PlayerTickEvent event)
-    {
+    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         EntityPlayer player = event.player;
 
-        if (player.world.isRemote)
-        {
-            if (player.moveForward < 0)
-            {
+        if (player.world.isRemote) {
+            if (player.moveForward < 0) {
                 float speedReductionFactor = 0.5F;
                 player.motionX *= speedReductionFactor;
                 player.motionZ *= speedReductionFactor;
@@ -62,19 +55,15 @@ public class ForgeEventHandler
         ArmsEnergyHelper.onPlayerTick(player);
         if (player.world.isRemote) return;
 
-        if (PlayerLocationHelper.hasChangePosition(player) && !player.isSneaking())
-        {
-            if (player.isSprinting())
-            {
+        if (PlayerLocationHelper.hasChangePosition(player) && !player.isSneaking()) {
+            if (player.isSprinting()) {
                 SoundAlertHelper.onSound(
                         player,
                         player.world,
                         SoundAlertHelper.SoundSource.RUNNING,
                         player.getPosition()
                 );
-            }
-            else
-            {
+            } else {
                 SoundAlertHelper.onSound(
                         player,
                         player.world,
@@ -88,27 +77,22 @@ public class ForgeEventHandler
     }
 
     @SubscribeEvent
-    public void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent event)
-    {
+    public void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent event) {
         EntityPlayer player = event.player;
         PlayerLocationHelper.clearPlayerData(player);
     }
 
     @SubscribeEvent
-    public static void onPlayerAttackEntity(AttackEntityEvent event)
-    {
-        EntityPlayer player   = event.getEntityPlayer();
-        Item         heldItem = player.getHeldItemMainhand().getItem();
+    public static void onPlayerAttackEntity(AttackEntityEvent event) {
+        EntityPlayer player = event.getEntityPlayer();
+        Item heldItem = player.getHeldItemMainhand().getItem();
 
-        if (!ArmsEnergyHelper.canHit(player))
-        {
+        if (!ArmsEnergyHelper.canHit(player)) {
             event.setCanceled(true);
             return;
-        }
-        else ArmsEnergyHelper.onPlayerHit(player);
+        } else ArmsEnergyHelper.onPlayerHit(player);
 
-        if (!CombatHelper.isCoherentWeapon(heldItem) && event.isCancelable())
-        {
+        if (!CombatHelper.isCoherentWeapon(heldItem) && event.isCancelable()) {
             event.setCanceled(true);
             Entity target = event.getTarget();
             KnockbackHelper.applyKnockbackToLivingEntity(player, target, false);
@@ -116,13 +100,10 @@ public class ForgeEventHandler
     }
 
     @SubscribeEvent
-    public static void onLivingHurt(LivingHurtEvent event)
-    {
-        if (event.getEntity() instanceof CustomBaseZombie)
-        {
+    public static void onLivingHurt(LivingHurtEvent event) {
+        if (event.getEntity() instanceof CustomBaseZombie) {
             CustomBaseZombie zombie = (CustomBaseZombie) event.getEntity();
-            if (event.getSource().getTrueSource() instanceof EntityPlayer)
-            {
+            if (event.getSource().getTrueSource() instanceof EntityPlayer) {
                 EntityPlayer player = (EntityPlayer) event.getSource().getTrueSource();
                 CombatHelper.tryToLocalizeDamage(zombie, player, event);
             }
@@ -130,14 +111,12 @@ public class ForgeEventHandler
     }
 
     @SubscribeEvent
-    public static void onEntityKnockback(LivingKnockBackEvent event)
-    {
+    public static void onEntityKnockback(LivingKnockBackEvent event) {
         if (event.isCancelable()) event.setCanceled(true);
     }
 
     @SubscribeEvent
-    public static void onBlockStartBreak(PlayerInteractEvent.LeftClickBlock event)
-    {
+    public static void onBlockStartBreak(PlayerInteractEvent.LeftClickBlock event) {
         SoundAlertHelper.onSound(
                 event.getEntityPlayer(),
                 event.getEntityPlayer().world,
@@ -147,18 +126,15 @@ public class ForgeEventHandler
     }
 
     @SubscribeEvent
-    public static void onPlayerRightClickEntity(PlayerInteractEvent.EntityInteract event)
-    {
+    public static void onPlayerRightClickEntity(PlayerInteractEvent.EntityInteract event) {
         EntityPlayer player = event.getEntityPlayer();
-        Entity       target = event.getTarget();
+        Entity target = event.getTarget();
 
-        if (ArmsEnergyHelper.canHit(player))
-        {
+        if (ArmsEnergyHelper.canHit(player)) {
             boolean knockbackApplied = KnockbackHelper.applyKnockbackToLivingEntity(
                     player, target, true
             );
-            if (knockbackApplied)
-            {
+            if (knockbackApplied) {
                 ArmsEnergyHelper.onPlayerHit(player);
             }
         }
@@ -172,10 +148,8 @@ public class ForgeEventHandler
     }
 
     @SubscribeEvent
-    public static void onPlayerJump(LivingEvent.LivingJumpEvent event)
-    {
-        if (event.getEntity() instanceof EntityPlayer && !event.getEntity().isSneaking())
-        {
+    public static void onPlayerJump(LivingEvent.LivingJumpEvent event) {
+        if (event.getEntity() instanceof EntityPlayer && !event.getEntity().isSneaking()) {
             EntityPlayer player = (EntityPlayer) event.getEntity();
             SpeedHelper.onPlayerJumped(player);
             SoundAlertHelper.onSound(player, player.world, SoundAlertHelper.SoundSource.JUMP, player.getPosition());
@@ -183,25 +157,21 @@ public class ForgeEventHandler
     }
 
     @SubscribeEvent
-    public static void onPlayerUpdate(LivingEvent.LivingUpdateEvent event)
-    {
-        if ((event.getEntity() instanceof EntityPlayer))
-        {
+    public static void onPlayerUpdate(LivingEvent.LivingUpdateEvent event) {
+        if ((event.getEntity() instanceof EntityPlayer)) {
             EntityPlayer player = (EntityPlayer) event.getEntity();
             SpeedHelper.updatePlayerSpeed(player);
         }
     }
 
     @SubscribeEvent
-    public static void onFOVUpdate(FOVUpdateEvent event)
-    {
+    public static void onFOVUpdate(FOVUpdateEvent event) {
         // Prevent the fov reduction to bee too annoying when jumping
         event.setNewfov(Math.max(0.95F, event.getFov()));
     }
 
     @SubscribeEvent
-    public static void onBlockBreak(BlockEvent.BreakEvent event)
-    {
+    public static void onBlockBreak(BlockEvent.BreakEvent event) {
         Block brokenBlock = event.getState().getBlock();
 
         boolean brokenBlockIsCristal = brokenBlock == Blocks.GLASS ||
@@ -218,16 +188,14 @@ public class ForgeEventHandler
     }
 
     @SubscribeEvent
-    public static void onEntityPlaceEvent(BlockEvent.EntityPlaceEvent event)
-    {
+    public static void onEntityPlaceEvent(BlockEvent.EntityPlaceEvent event) {
         SoundAlertHelper.onSound(event.getEntity(), event.getWorld(), SoundAlertHelper.SoundSource.BLOCK_PLACED,
                 event.getPos()
         );
     }
 
     @SubscribeEvent
-    public static void onEntityHurt(LivingHurtEvent event)
-    {
+    public static void onEntityHurt(LivingHurtEvent event) {
         SoundAlertHelper.onSound(
                 event.getEntity(),
                 event.getEntity().world,
@@ -237,8 +205,7 @@ public class ForgeEventHandler
     }
 
     @SubscribeEvent
-    public static void onEntityDeath(LivingDeathEvent event)
-    {
+    public static void onEntityDeath(LivingDeathEvent event) {
         SoundAlertHelper.onSound(
                 event.getEntity(),
                 event.getEntity().world,
@@ -248,8 +215,7 @@ public class ForgeEventHandler
     }
 
     @SubscribeEvent
-    public static void onItemUse(PlayerInteractEvent.RightClickItem event)
-    {
+    public static void onItemUse(PlayerInteractEvent.RightClickItem event) {
         SoundAlertHelper.onSound(
                 event.getEntity(),
                 event.getWorld(),
@@ -259,10 +225,8 @@ public class ForgeEventHandler
     }
 
     @SubscribeEvent
-    public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event)
-    {
-        if (event.getWorld().getBlockState(event.getPos()).getBlock() instanceof BlockDoor)
-        {
+    public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+        if (event.getWorld().getBlockState(event.getPos()).getBlock() instanceof BlockDoor) {
             SoundAlertHelper.onSound(
                     event.getEntity(),
                     event.getWorld(),
@@ -273,15 +237,13 @@ public class ForgeEventHandler
     }
 
     @SubscribeEvent
-    public static void onExplosion(ExplosionEvent event)
-    {
+    public static void onExplosion(ExplosionEvent event) {
         BlockPos pos = new BlockPos(event.getExplosion().getPosition());
         SoundAlertHelper.onSound(null, event.getWorld(), SoundAlertHelper.SoundSource.EXPLOSION, pos);
     }
 
     @SubscribeEvent
-    public static void onArrowShoot(ArrowLooseEvent event)
-    {
+    public static void onArrowShoot(ArrowLooseEvent event) {
         SoundAlertHelper.onSound(event.getEntityPlayer(), event.getEntity().world,
                 SoundAlertHelper.SoundSource.ARROW_SHOOT,
                 event.getEntity().getPosition()
@@ -289,8 +251,7 @@ public class ForgeEventHandler
     }
 
     @SubscribeEvent
-    public static void onArrowImpact(ArrowNockEvent event)
-    {
+    public static void onArrowImpact(ArrowNockEvent event) {
         SoundAlertHelper.onSound(
                 event.getEntity(), event.getEntity().world, SoundAlertHelper.SoundSource.ARROW_HIT,
                 event.getEntity().getPosition()
@@ -298,10 +259,8 @@ public class ForgeEventHandler
     }
 
     @SubscribeEvent
-    public static void onMobBreed(EntityJoinWorldEvent event)
-    {
-        if (event.getEntity() instanceof EntityAgeable && ((EntityAgeable) event.getEntity()).isChild())
-        {
+    public static void onMobBreed(EntityJoinWorldEvent event) {
+        if (event.getEntity() instanceof EntityAgeable && ((EntityAgeable) event.getEntity()).isChild()) {
             SoundAlertHelper.onSound(event.getEntity(),
                     event.getWorld(), SoundAlertHelper.SoundSource.ANIMAL_BREED,
                     event.getEntity().getPosition()
@@ -310,25 +269,22 @@ public class ForgeEventHandler
     }
 
     @SubscribeEvent
-    public static void onHorseGallop(LivingEvent.LivingUpdateEvent event)
-    {
-        if (event.getEntity() instanceof EntityHorse && event.getEntity().isBeingRidden())
-        {
+    public static void onHorseGallop(LivingEvent.LivingUpdateEvent event) {
+        if (event.getEntity() instanceof EntityHorse && event.getEntity().isBeingRidden()) {
             SoundAlertHelper.onSound(event.getEntity(), event.getEntity().world,
                     SoundAlertHelper.SoundSource.HORSE_GALLOP,
                     event.getEntity()
-                         .getPosition()
+                            .getPosition()
             );
         }
     }
 
     @SubscribeEvent
-    public static void onItemBreak(PlayerDestroyItemEvent event)
-    {
+    public static void onItemBreak(PlayerDestroyItemEvent event) {
         SoundAlertHelper.onSound(event.getEntityPlayer(), event.getEntity().world,
                 SoundAlertHelper.SoundSource.ITEM_BREAK,
                 event.getEntity()
-                     .getPosition()
+                        .getPosition()
         );
     }
 

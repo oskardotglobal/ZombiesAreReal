@@ -11,12 +11,9 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class KnockbackHelper
-{
-    public static boolean applyKnockbackToLivingEntity(EntityPlayer player, Entity target, boolean swingArm)
-    {
-        if (target instanceof EntityLivingBase && !isNonLivingEntity(target))
-        {
+public class KnockbackHelper {
+    public static boolean applyKnockbackToLivingEntity(EntityPlayer player, Entity target, boolean swingArm) {
+        if (target instanceof EntityLivingBase && !isNonLivingEntity(target)) {
             applyKnockbackToLivingEntity(player, target);
             if (swingArm) swingArm(player);
             return true;
@@ -24,10 +21,9 @@ public class KnockbackHelper
         return false;
     }
 
-    private static void applyKnockbackToLivingEntity(EntityPlayer player, Entity target)
-    {
+    private static void applyKnockbackToLivingEntity(EntityPlayer player, Entity target) {
         double knockbackStrength = 0.6;
-        Vec3d  lookVec           = player.getLookVec();
+        Vec3d lookVec = player.getLookVec();
 
         // Calculate the new motion values after knockback
         double newMotionX = target.motionX + lookVec.x * knockbackStrength;
@@ -43,8 +39,7 @@ public class KnockbackHelper
         target.motionZ = newMotionZ;
     }
 
-    private static boolean isNonLivingEntity(Entity entity)
-    {
+    private static boolean isNonLivingEntity(Entity entity) {
         //entity instanceof EntityEgg ||
         //entity instanceof EntityPotion ||
         //entity instanceof EntityExpBottle ||
@@ -62,8 +57,7 @@ public class KnockbackHelper
     }
 
     @SideOnly(Side.CLIENT)
-    private static void swingArm(EntityPlayer player)
-    {
+    private static void swingArm(EntityPlayer player) {
         player.swingArm(EnumHand.MAIN_HAND);
         Minecraft.getMinecraft().player.connection.sendPacket(new CPacketAnimation(EnumHand.MAIN_HAND));
     }

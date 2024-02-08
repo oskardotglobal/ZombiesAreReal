@@ -10,20 +10,17 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityEntryBuilder;
 
 @Mod.EventBusSubscriber
-public class EntityRegistryHandler
-{
+public class EntityRegistryHandler {
     private static final int TERRAIN_ZOMBIE_ID = 93244332;
     private static final int HORDE_ZOMBIE_ID = 93244333;
 
     @SubscribeEvent
-    public static void registerEntities(RegistryEvent.Register<EntityEntry> event)
-    {
+    public static void registerEntities(RegistryEvent.Register<EntityEntry> event) {
         registerTerrainZombie(event);
         registerHordeZombie(event);
     }
 
-    private static void registerHordeZombie(RegistryEvent.Register<EntityEntry> event)
-    {
+    private static void registerHordeZombie(RegistryEvent.Register<EntityEntry> event) {
         EntityEntry entry = EntityEntryBuilder
                 .create()
                 .entity(HordeZombie.class)
@@ -35,8 +32,7 @@ public class EntityRegistryHandler
         event.getRegistry().registerAll(entry);
     }
 
-    private static void registerTerrainZombie(RegistryEvent.Register<EntityEntry> event)
-    {
+    private static void registerTerrainZombie(RegistryEvent.Register<EntityEntry> event) {
         EntityEntry entry = EntityEntryBuilder
                 .create()
                 .entity(TerrainZombie.class)

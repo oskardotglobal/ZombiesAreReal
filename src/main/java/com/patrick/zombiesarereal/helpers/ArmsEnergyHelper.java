@@ -29,7 +29,6 @@ public class ArmsEnergyHelper
         boolean    canHit = data.hitCooldown == 0;
         if (!canHit)
         {
-            swingCamera(player);
             player.performHurtAnimation();
         }
         return canHit;
@@ -61,15 +60,6 @@ public class ArmsEnergyHelper
         {
             data.hitCooldown--;
         }
-    }
-
-    private static void swingCamera(EntityPlayer player)
-    {
-        Random rand       = new Random();
-        float  deltaYaw   = rand.nextBoolean() ? 30 : -30;
-        float  deltaPitch = rand.nextBoolean() ? 15 : -15;
-        player.rotationYaw -= deltaYaw;
-        player.rotationPitch += deltaPitch;
     }
 
     private static int calcHitCooldown(int energy)

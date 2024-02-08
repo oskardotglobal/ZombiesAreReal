@@ -14,15 +14,12 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
 import java.util.Random;
 
-public class CombatHelper
-{
+public class CombatHelper {
     public static final Random rand = new Random();
 
-    public static boolean isCoherentWeapon(Item heldItem)
-    {
+    public static boolean isCoherentWeapon(Item heldItem) {
         boolean isCoherentObject = false;
-        if (heldItem instanceof ItemBlock)
-        {
+        if (heldItem instanceof ItemBlock) {
             Block block = ((ItemBlock) heldItem).getBlock();
             boolean isNotCoherentObject = block == Blocks.DIRT ||
                     block == Blocks.GRASS ||
@@ -43,9 +40,7 @@ public class CombatHelper
                     block == Blocks.BEETROOTS;
             if (!isNotCoherentObject)
                 isCoherentObject = block.getDefaultState().isOpaqueCube();
-        }
-        else
-        {
+        } else {
             isCoherentObject = heldItem instanceof ItemSword ||
                     heldItem instanceof ItemAxe ||
                     heldItem instanceof ItemPickaxe ||
@@ -59,8 +54,7 @@ public class CombatHelper
         return isCoherentObject;
     }
 
-    public static void tryToLocalizeDamage(CustomBaseZombie zombie, EntityPlayer player, LivingHurtEvent event)
-    {
+    public static void tryToLocalizeDamage(CustomBaseZombie zombie, EntityPlayer player, LivingHurtEvent event) {
         CombatHelper.tryToLocalizeMeleeDamage(zombie, player, event);
         // Projectile localized damaged disable because it is not working properly
         // TODO: Remake localized damage system for projectiles
@@ -68,36 +62,32 @@ public class CombatHelper
         if (!canLocalize) tryToLocalizeProjectileDamage(zombie, event);*/
     }
 
-    private static void tryToLocalizeProjectileDamage(CustomBaseZombie zombie, LivingHurtEvent event)
-    {
+    private static void tryToLocalizeProjectileDamage(CustomBaseZombie zombie, LivingHurtEvent event) {
         DamageSource source = event.getSource();
 
-        if (source.getImmediateSource() != null)
-        {
-            Vec3d  hitVec = source.getImmediateSource().getPositionVector();
-            double hitY   = hitVec.y;
-            float  amount = event.getAmount();
+        if (source.getImmediateSource() != null) {
+            Vec3d hitVec = source.getImmediateSource().getPositionVector();
+            double hitY = hitVec.y;
+            float amount = event.getAmount();
 
             if (event.isCancelable()) event.setCanceled(true);
 
-            double headTop     = zombie.posY + 2.0D;
-            double headBottom  = zombie.posY + 1.5D;
-            double torsoTop    = headBottom;
+            double headTop = zombie.posY + 2.0D;
+            double headBottom = zombie.posY + 1.5D;
+            double torsoTop = headBottom;
             double torsoBottom = zombie.posY + 1.0D;
-            double legsTop     = torsoBottom;
-            double legsBottom  = zombie.posY;
+            double legsTop = torsoBottom;
+            double legsBottom = zombie.posY;
 
             if (hitY > headBottom && hitY <= headTop) // Head
             {
                 zombie.reduceHeadHealth(amount);
-            }
-            else if (hitY > torsoBottom && hitY <= torsoTop) // Torso
+            } else if (hitY > torsoBottom && hitY <= torsoTop) // Torso
             {
                 boolean isLeftArm = rand.nextBoolean();
                 if (isLeftArm) zombie.reduceLeftArmHealth(amount);
                 else zombie.reduceRightArmHealth(amount);
-            }
-            else if (hitY > legsBottom && hitY <= legsTop) // Legs
+            } else if (hitY > legsBottom && hitY <= legsTop) // Legs
             {
                 boolean isLeftLeg = rand.nextBoolean();
                 if (isLeftLeg) zombie.reduceLeftLegHealth(amount);
@@ -106,8 +96,7 @@ public class CombatHelper
         }
     }
 
-    private static boolean tryToLocalizeMeleeDamage(CustomBaseZombie zombie, EntityPlayer player, LivingHurtEvent event)
-    {
+    private static boolean tryToLocalizeMeleeDamage(CustomBaseZombie zombie, EntityPlayer player, LivingHurtEvent event) {
         DamageSource source = event.getSource();
         if (!(source instanceof EntityDamageSource)) return false;
         if (source instanceof EntityDamageSourceIndirect) return false;
@@ -116,12 +105,11 @@ public class CombatHelper
 
         if (event.isCancelable()) event.setCanceled(true);
 
-        float pitch  = player.rotationPitch;
+        float pitch = player.rotationPitch;
         float amount = event.getAmount();
 
         // if player is jumping/in the air, force headshot
-        if (!player.onGround)
-        {
+        if (!player.onGround) {
             zombie.reduceHeadHealth(amount);
             return true;
         }
@@ -131,14 +119,12 @@ public class CombatHelper
             boolean isLeftLeg = rand.nextBoolean();
             if (isLeftLeg) zombie.reduceLeftLegHealth(amount);
             else zombie.reduceRightLegHealth(amount);
-        }
-        else if (pitch > 5) // Torso
+        } else if (pitch > 5) // Torso
         {
             boolean isLeftArm = rand.nextBoolean();
             if (isLeftArm) zombie.reduceLeftArmHealth(amount);
             else zombie.reduceRightArmHealth(amount);
-        }
-        else // Head
+        } else // Head
         {
             zombie.reduceHeadHealth(amount);
         }

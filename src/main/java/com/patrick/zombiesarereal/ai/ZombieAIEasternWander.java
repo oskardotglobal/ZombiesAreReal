@@ -6,41 +6,32 @@ import net.minecraft.util.math.Vec3d;
 
 import java.util.Random;
 
-public class ZombieAIEasternWander extends EntityAIWander
-{
+public class ZombieAIEasternWander extends EntityAIWander {
     private final Random rand;
 
-    public ZombieAIEasternWander(CustomBaseZombie creature, double speedIn, int chance)
-    {
+    public ZombieAIEasternWander(CustomBaseZombie creature, double speedIn, int chance) {
         super(creature, speedIn, chance);
         setMutexBits(2);
         rand = new Random();
     }
 
     @Override
-    public boolean shouldExecute()
-    {
-        if (this.entity.getAttackTarget() != null)
-        {
+    public boolean shouldExecute() {
+        if (this.entity.getAttackTarget() != null) {
             return false;
         }
 
-        if (!this.mustUpdate)
-        {
-            if (this.entity.getRNG().nextInt(this.executionChance) != 0)
-            {
+        if (!this.mustUpdate) {
+            if (this.entity.getRNG().nextInt(this.executionChance) != 0) {
                 return false;
             }
         }
 
         Vec3d vec3d = this.getPosition();
 
-        if (vec3d == null)
-        {
+        if (vec3d == null) {
             return false;
-        }
-        else
-        {
+        } else {
             this.x = vec3d.x;
             this.y = vec3d.y;
             this.z = vec3d.z;
@@ -50,8 +41,7 @@ public class ZombieAIEasternWander extends EntityAIWander
     }
 
     @Override
-    public void updateTask()
-    {
+    public void updateTask() {
         this.entity
                 .getLookHelper()
                 .setLookPosition(
@@ -62,10 +52,9 @@ public class ZombieAIEasternWander extends EntityAIWander
     }
 
     @Override
-    protected Vec3d getPosition()
-    {
+    protected Vec3d getPosition() {
         double randomEastMovement = 3 + rand.nextDouble() * 6;
-        double randomZMovement    = (rand.nextDouble() * 6) - 3;
+        double randomZMovement = (rand.nextDouble() * 6) - 3;
 
         Vec3d direction = new Vec3d(randomEastMovement, 0, randomZMovement);
 

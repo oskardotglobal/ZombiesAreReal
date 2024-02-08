@@ -7,20 +7,16 @@ import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 
-public class ZombieAINearestAttackablePlayer extends EntityAINearestAttackableTarget<EntityPlayer>
-{
+public class ZombieAINearestAttackablePlayer extends EntityAINearestAttackableTarget<EntityPlayer> {
     public ZombieAINearestAttackablePlayer(
             EntityZombie creature, Class<EntityPlayer> classTarget, boolean checkSight
-    )
-    {
+    ) {
         super(creature, classTarget, 0, checkSight, false, null);
     }
 
     @Override
-    public boolean shouldExecute()
-    {
-        if (super.shouldExecute())
-        {
+    public boolean shouldExecute() {
+        if (super.shouldExecute()) {
             if (playerIsSneakingAndNotCloseEnough(targetEntity)) return false;
             if (!PlayerLocationHelper.hasChangePosition(targetEntity)) return false;
             return true;
@@ -29,12 +25,9 @@ public class ZombieAINearestAttackablePlayer extends EntityAINearestAttackableTa
     }
 
     @Override
-    public boolean shouldContinueExecuting()
-    {
-        if (super.shouldContinueExecuting())
-        {
-            if (this.taskOwner.getRNG().nextInt(40) == 1)
-            {
+    public boolean shouldContinueExecuting() {
+        if (super.shouldContinueExecuting()) {
+            if (this.taskOwner.getRNG().nextInt(40) == 1) {
                 this.taskOwner.playLivingSound();
                 SoundAlertHelper.onSound(
                         this.taskOwner,
@@ -49,8 +42,7 @@ public class ZombieAINearestAttackablePlayer extends EntityAINearestAttackableTa
     }
 
     @Override
-    public void startExecuting()
-    {
+    public void startExecuting() {
         super.startExecuting();
         this.taskOwner.playLivingSound();
         SoundAlertHelper.onSound(
@@ -61,8 +53,7 @@ public class ZombieAINearestAttackablePlayer extends EntityAINearestAttackableTa
         );
     }
 
-    private boolean playerIsSneakingAndNotCloseEnough(EntityPlayer player)
-    {
+    private boolean playerIsSneakingAndNotCloseEnough(EntityPlayer player) {
         return player.isSneaking() && this.taskOwner.getDistance(player) > CustomBaseZombie.TARGET_RANGE;
     }
 }

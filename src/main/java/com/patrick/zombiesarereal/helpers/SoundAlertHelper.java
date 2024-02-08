@@ -16,26 +16,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public class SoundAlertHelper
-{
-    private static final int WHISPER_RANGE  = 16;
-    private static final int TALK_RANGE     = 32;
+public class SoundAlertHelper {
+    private static final int WHISPER_RANGE = 16;
+    private static final int TALK_RANGE = 32;
     // TODO: Paths more far than FOLLOW_RANGE needs an stepped pathfinding ai
     private static final int SHOUTING_RANGE = 48;
-    private static final int SCREAM_RANGE   = 64;
+    private static final int SCREAM_RANGE = 64;
 
     private static final int SOUND_COOLDOWN = 2000; // milliseconds
 
     private static final Map<String, SoundData> soundDataMap = new HashMap<>();
-    private static final Random                 rand         = new Random();
+    private static final Random rand = new Random();
 
-    private static class SoundData
-    {
+    private static class SoundData {
         long lastSoundTime = 0;
     }
 
-    public enum SoundSource
-    {
+    public enum SoundSource {
         BLOCK_BROKEN,
         CRISTAL_BROKEN,
         BLOCK_PLACED,
@@ -60,8 +57,7 @@ public class SoundAlertHelper
     /**
      * Returns false if it is too soon to execute again
      */
-    public static boolean onSound(Entity sourceEntity, World world, SoundSource soundSource, BlockPos soundPos)
-    {
+    public static boolean onSound(Entity sourceEntity, World world, SoundSource soundSource, BlockPos soundPos) {
         if (world.isRemote) return false;
         if (isTooSoon(soundPos, soundSource)) return false;
 
@@ -74,24 +70,21 @@ public class SoundAlertHelper
                 soundPos.add(alertRadius, alertRadius, alertRadius)
         ));
 
-        for (EntityZombie zombie : zombies)
-        {
+        for (EntityZombie zombie : zombies) {
             if (!zombie.equals(sourceEntity))
                 alertZombieOfSound(zombie, soundPos);
         }
         return true;
     }
 
-    private static boolean isTooSoon(BlockPos soundPos, SoundSource soundSource)
-    {
+    private static boolean isTooSoon(BlockPos soundPos, SoundSource soundSource) {
         if (soundDataMap.size() > 1000) soundDataMap.clear();
 
-        if (soundSource == SoundSource.WALKING || soundSource == SoundSource.RUNNING)
-        {
+        if (soundSource == SoundSource.WALKING || soundSource == SoundSource.RUNNING) {
             return rand.nextInt(10) != 0;
         }
 
-        String    key  = makeBlockPosString(soundPos);
+        String key = makeBlockPosString(soundPos);
         SoundData data = soundDataMap.computeIfAbsent(key, k -> new SoundData());
 
         long currentTime = System.currentTimeMillis();
@@ -104,17 +97,14 @@ public class SoundAlertHelper
         return false;
     }
 
-    private static String makeBlockPosString(BlockPos soundPos)
-    {
+    private static String makeBlockPosString(BlockPos soundPos) {
         return soundPos != null
                 ? soundPos.getX() + "," + soundPos.getY() + "," + soundPos.getZ()
                 : "null";
     }
 
-    private static int getRadius(SoundSource soundSource)
-    {
-        switch (soundSource)
-        {
+    private static int getRadius(SoundSource soundSource) {
+        switch (soundSource) {
             case EXPLOSION:
             case ANIMAL_BREED: // TO SIMULATE ZOMBIES SMELLING THE ANIMALS
             case CRISTAL_BROKEN:
@@ -142,15 +132,11 @@ public class SoundAlertHelper
         }
     }
 
-    private static void alertZombieOfSound(EntityZombie zombie, BlockPos soundPos)
-    {
-        for (EntityAITasks.EntityAITaskEntry taskEntry : zombie.tasks.taskEntries)
-        {
-            if (taskEntry != null)
-            {
+    private static void alertZombieOfSound(EntityZombie zombie, BlockPos soundPos) {
+        for (EntityAITasks.EntityAITaskEntry taskEntry : zombie.tasks.taskEntries) {
+            if (taskEntry != null) {
                 EntityAIBase task = taskEntry.action;
-                if (task instanceof ZombieAIInvestigateSound)
-                {
+                if (task instanceof ZombieAIInvestigateSound) {
                     ((ZombieAIInvestigateSound) task).setSoundPos(soundPos);
                 }
             }

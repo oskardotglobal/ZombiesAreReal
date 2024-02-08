@@ -10,13 +10,10 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
-public class DebugUtil
-{
-    public static void spawnNoteParticleAtBlockPos(World world, BlockPos pos)
-    {
+public class DebugUtil {
+    public static void spawnNoteParticleAtBlockPos(World world, BlockPos pos) {
         if (world.isRemote) return;
-        for (int i = 0; i < 1000; i++)
-        {
+        for (int i = 0; i < 1000; i++) {
             EnumParticleTypes particleID = EnumParticleTypes.NOTE;
             SPacketParticles packet = new SPacketParticles(particleID,
                     false,
@@ -29,15 +26,13 @@ public class DebugUtil
             for (EntityPlayerMP player : world.getEntitiesWithinAABB(
                     EntityPlayerMP.class,
                     new AxisAlignedBB(pos).grow(64)
-            ))
-            {
+            )) {
                 player.connection.sendPacket(packet);
             }
         }
     }
 
-    public static void showChat(EntityPlayer player, String message)
-    {
+    public static void showChat(EntityPlayer player, String message) {
         TextComponentString text = new TextComponentString(message);
         text.getStyle().setColor(TextFormatting.DARK_GRAY);
         player.sendMessage(text);
