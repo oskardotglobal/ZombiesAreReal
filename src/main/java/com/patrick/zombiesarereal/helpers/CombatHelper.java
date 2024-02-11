@@ -56,10 +56,10 @@ public class CombatHelper {
 
     public static void tryToLocalizeDamage(CustomBaseZombie zombie, EntityPlayer player, LivingHurtEvent event) {
         CombatHelper.tryToLocalizeMeleeDamage(zombie, player, event);
-        // Projectile localized damaged disable because it is not working properly
         // TODO: Remake localized damage system for projectiles
-        /*boolean canLocalize = CombatHelper.tryToLocalizeMeleeDamage(zombie, player, event);
-        if (!canLocalize) tryToLocalizeProjectileDamage(zombie, event);*/
+        // fuck this, I don't care if it doesn't work
+        boolean canLocalize = CombatHelper.tryToLocalizeMeleeDamage(zombie, player, event);
+        if (!canLocalize) tryToLocalizeProjectileDamage(zombie, event);
     }
 
     private static void tryToLocalizeProjectileDamage(CustomBaseZombie zombie, LivingHurtEvent event) {

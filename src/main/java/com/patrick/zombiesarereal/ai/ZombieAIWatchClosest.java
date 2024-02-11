@@ -18,9 +18,7 @@ public class ZombieAIWatchClosest extends EntityAIWatchClosest {
     @Override
     public boolean shouldExecute() {
         if (!super.shouldExecute()) return false;
-        if (playerIsNotMoving()) return false;
-
-        return true;
+        return !playerIsNotMoving();
     }
 
     private boolean playerIsNotMoving() {

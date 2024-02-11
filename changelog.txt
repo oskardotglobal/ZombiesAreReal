@@ -1,5 +1,12 @@
 =========
-Build: 2.0.1
+Build: 2.2.0
+	oskardotglobal:
+        Change the amount of horders per player
+        Localize projectile damage even if that's broken, I don't fucking care
+        Make horders wander into player direction
+
+=========
+Build: 2.1.0
 	oskardotglobal:
         Hide player nametags
 

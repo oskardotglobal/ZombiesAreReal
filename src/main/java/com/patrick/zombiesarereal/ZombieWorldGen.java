@@ -36,11 +36,12 @@ public class ZombieWorldGen implements IWorldGenerator {
                 EntityZombie zombie = new TerrainZombie(world);
                 zombie.setLocationAndAngles(x + 0.5, y, z + 0.5, rand.nextFloat() * 360.0F, 0.0F);
                 world.spawnEntity(zombie);
+                world.spawnEntity(zombie);
             }
         }
     }
 
-    private static boolean isAllowedBlock(IBlockState state) {
+    public static boolean isAllowedBlock(IBlockState state) {
         Block block = state.getBlock();
 
         // List of blocks we consider as part of "trees".
