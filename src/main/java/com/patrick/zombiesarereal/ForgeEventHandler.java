@@ -2,6 +2,7 @@ package com.patrick.zombiesarereal;
 
 import com.patrick.zombiesarereal.entities.CustomBaseZombie;
 import com.patrick.zombiesarereal.helpers.*;
+import ibxm.Player;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.entity.Entity;
@@ -10,6 +11,7 @@ import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -100,17 +102,6 @@ public class ForgeEventHandler {
     }
 
     @SubscribeEvent
-    public static void onLivingHurt(LivingHurtEvent event) {
-        if (event.getEntity() instanceof CustomBaseZombie) {
-            CustomBaseZombie zombie = (CustomBaseZombie) event.getEntity();
-            if (event.getSource().getTrueSource() instanceof EntityPlayer) {
-                EntityPlayer player = (EntityPlayer) event.getSource().getTrueSource();
-                CombatHelper.tryToLocalizeDamage(zombie, player, event);
-            }
-        }
-    }
-
-    @SubscribeEvent
     public static void onEntityKnockback(LivingKnockBackEvent event) {
         if (event.isCancelable()) event.setCanceled(true);
     }
@@ -173,18 +164,24 @@ public class ForgeEventHandler {
     @SubscribeEvent
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
         Block brokenBlock = event.getState().getBlock();
+        EntityPlayer player = event.getPlayer();
 
         boolean brokenBlockIsCristal = brokenBlock == Blocks.GLASS ||
                 brokenBlock == Blocks.STAINED_GLASS ||
                 brokenBlock == Blocks.STAINED_GLASS_PANE;
+
         if (brokenBlockIsCristal)
-            SoundAlertHelper.onSound(event.getPlayer(), event.getWorld(),
+            SoundAlertHelper.onSound(player, event.getWorld(),
                     SoundAlertHelper.SoundSource.CRISTAL_BROKEN, event.getPos()
             );
         else
-            SoundAlertHelper.onSound(event.getPlayer(), event.getWorld(), SoundAlertHelper.SoundSource.BLOCK_BROKEN,
+            SoundAlertHelper.onSound(player, event.getWorld(), SoundAlertHelper.SoundSource.BLOCK_BROKEN,
                     event.getPos()
             );
+
+        if (player.getHeldItemMainhand() == ItemStack.EMPTY && !player.isCreative()) {
+            event.setCanceled(true);
+        }
     }
 
     @SubscribeEvent
@@ -287,5 +284,4 @@ public class ForgeEventHandler {
                         .getPosition()
         );
     }
-
 }

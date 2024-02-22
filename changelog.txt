@@ -1,4 +1,19 @@
 =========
+Build: 2.3.1
+	oskardotglobal:
+        Remove localized damage
+
+=========
+Build: 2.3.0
+	oskardotglobal:
+        Players can no longer break blocks with their hands whilst in survival mode.
+        Terrain zombies now spawn in packs of 3
+        All zombies now can
+          - break blocks
+          - climb ladders
+          - leap at their targets
+
+=========
 Build: 2.2.0
 	oskardotglobal:
         Change the amount of horders per player

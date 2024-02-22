@@ -35,8 +35,10 @@ public class ZombieWorldGen implements IWorldGenerator {
             if (y > 0 && isAllowedBlock(blockStateUnder) && isAllowedBlock(blockState)) {
                 EntityZombie zombie = new TerrainZombie(world);
                 zombie.setLocationAndAngles(x + 0.5, y, z + 0.5, rand.nextFloat() * 360.0F, 0.0F);
-                world.spawnEntity(zombie);
-                world.spawnEntity(zombie);
+
+                for (int i = 0; i < 3; i++) {
+                    world.spawnEntity(zombie);
+                }
             }
         }
     }
