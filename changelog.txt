@@ -1,4 +1,9 @@
 =========
+Build: 2.3.2
+	oskardotglobal:
+        Remove worldgen
+
+=========
 Build: 2.3.1
 	oskardotglobal:
         Remove localized damage
