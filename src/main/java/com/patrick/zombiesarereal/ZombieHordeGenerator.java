@@ -51,10 +51,7 @@ public class ZombieHordeGenerator {
             for (HordeZombie.Direction direction : HordeZombie.Direction.values()) {
                 for (int i = 0; i < HORDE_SIZE; i++) {
                     BlockPos zombiePos = playerPos.add(getZombiePos(direction));
-                    IBlockState blockState = world.getBlockState(zombiePos.down());
-
                     if (!world.canSeeSky(zombiePos)) break;
-                    if (!ZombieWorldGen.isAllowedBlock(blockState)) break;
 
                     HordeZombie hordeZombie = new HordeZombie(world);
                     hordeZombie.setHordeTarget(direction, playerPos);
