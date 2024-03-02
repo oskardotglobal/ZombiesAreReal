@@ -8,23 +8,17 @@ import com.patrick.zombiesarereal.ai.ZombieAIInvestigateSound;
 import com.patrick.zombiesarereal.ai.ZombieAINearestAttackablePlayer;
 import com.patrick.zombiesarereal.ai.ZombieAIWatchClosest;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIZombieAttack;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-import java.util.Random;
-import java.util.UUID;
-
 public class CustomBaseZombie extends EntityZombie {
-    public static final int FOLLOW_RANGE = 64;
+    public static final int FOLLOW_RANGE = 32;
     public static final int VISION_RANGE = 16;
-    public static final int TARGET_RANGE = 32;
+    public static final int TARGET_RANGE = 8;
     public static final int LEAP_CHANCE = 5;
     public static final double MAX_SPEED = 0.40D;
     public static final double MAX_ATTACK_DAMAGE = 20.0F;
@@ -36,7 +30,9 @@ public class CustomBaseZombie extends EntityZombie {
     public CustomBaseZombie(World worldIn) {
         super(worldIn);
         this.enablePersistence();
+
         this.setHealth(MAX_HEALTH);
+        this.setChild(false);
     }
 
     @Override

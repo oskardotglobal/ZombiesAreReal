@@ -1,4 +1,13 @@
 =========
+Build: 2.4.0
+	oskardotglobal:
+        All tools including axes will now only deal a single point of damage to zombies
+        Blocks can no longer be broken with items that aren't tools
+        Zombies can no longer be babies
+        Reduced vision, follow and target range of zombies
+        Increased horde initial distance
+
+=========
 Build: 2.3.2
 	oskardotglobal:
         Remove worldgen

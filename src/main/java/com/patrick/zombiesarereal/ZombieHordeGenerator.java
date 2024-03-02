@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 import java.util.Random;
 
 public class ZombieHordeGenerator {
-    private static final int HORDE_INITIAL_DISTANCE = 48;
+    private static final int HORDE_INITIAL_DISTANCE = 64;
     private static final int HORDE_SIZE = 20;
 
     private static final Random rand = new Random();

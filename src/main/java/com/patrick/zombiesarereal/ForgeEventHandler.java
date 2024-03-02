@@ -1,8 +1,6 @@
 package com.patrick.zombiesarereal;
 
-import com.patrick.zombiesarereal.entities.CustomBaseZombie;
 import com.patrick.zombiesarereal.helpers.*;
-import ibxm.Player;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.entity.Entity;
@@ -10,8 +8,8 @@ import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -93,6 +91,18 @@ public class ForgeEventHandler {
             event.setCanceled(true);
             return;
         } else ArmsEnergyHelper.onPlayerHit(player);
+
+        // If item is a tool, apply a single point of damage and return
+        if (heldItem instanceof ItemPickaxe ||
+                heldItem instanceof ItemAxe ||
+                heldItem instanceof ItemSpade ||
+                heldItem instanceof ItemHoe) {
+
+            event.setCanceled(true);
+            event.getTarget().attackEntityFrom(DamageSource.causePlayerDamage(player), 1);
+
+            return;
+        }
 
         if (!CombatHelper.isCoherentWeapon(heldItem) && event.isCancelable()) {
             event.setCanceled(true);
@@ -179,7 +189,13 @@ public class ForgeEventHandler {
                     event.getPos()
             );
 
-        if (player.getHeldItemMainhand() == ItemStack.EMPTY && !player.isCreative()) {
+        boolean canBreakFasterWithItem = ItemStack.EMPTY.getDestroySpeed(event.getState())
+                <= player.getHeldItemMainhand().getDestroySpeed(event.getState());
+
+        if (player.getHeldItemMainhand() == ItemStack.EMPTY &&
+                !canBreakFasterWithItem &&
+                !player.isCreative() &&
+                !brokenBlockIsCristal) {
             event.setCanceled(true);
         }
     }
