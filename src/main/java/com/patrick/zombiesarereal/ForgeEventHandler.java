@@ -192,7 +192,7 @@ public class ForgeEventHandler {
         boolean canBreakFasterWithItem = ItemStack.EMPTY.getDestroySpeed(event.getState())
                 <= player.getHeldItemMainhand().getDestroySpeed(event.getState());
 
-        if (player.getHeldItemMainhand() == ItemStack.EMPTY &&
+        if (player.getHeldItemMainhand() == ItemStack.EMPTY ||
                 !canBreakFasterWithItem &&
                 !player.isCreative() &&
                 !brokenBlockIsCristal) {
