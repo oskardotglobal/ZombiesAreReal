@@ -1,4 +1,9 @@
 =========
+Build: 2.4.1
+	oskardotglobal:
+	    Fix block break
+
+=========
 Build: 2.4.0
 	oskardotglobal:
         All tools including axes will now only deal a single point of damage to zombies
