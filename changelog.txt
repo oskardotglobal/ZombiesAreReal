@@ -1,4 +1,9 @@
 =========
+Build: 2.4.2
+	oskardotglobal:
+	    Fix not being able to break blocks without a preferred tool
+
+=========
 Build: 2.4.1
 	oskardotglobal:
 	    Fix block break
