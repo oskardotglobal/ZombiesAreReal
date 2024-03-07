@@ -12,8 +12,12 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIZombieAttack;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.world.World;
+
+import javax.annotation.Nonnull;
 
 public class CustomBaseZombie extends EntityZombie {
     public static final int FOLLOW_RANGE = 32;
@@ -27,12 +31,20 @@ public class CustomBaseZombie extends EntityZombie {
     public static final float MAX_HEALTH = 40.0F;
     public static final float LEAP_HEIGHT = 0.2F;
 
+    private static final DataParameter<Byte> CLIMBING = EntityDataManager.<Byte>createKey(CustomBaseZombie.class, DataSerializers.BYTE);
+
     public CustomBaseZombie(World worldIn) {
         super(worldIn);
         this.enablePersistence();
 
         this.setHealth(MAX_HEALTH);
         this.setChild(false);
+    }
+
+    @Override
+    protected void entityInit() {
+        super.entityInit();
+        this.dataManager.register(CLIMBING, (byte) 0);
     }
 
     @Override
@@ -67,15 +79,39 @@ public class CustomBaseZombie extends EntityZombie {
     }
 
     @Override
-    protected ResourceLocation getLootTable() {
-        return null;
-    }
-
-    @Override
-    public boolean attackEntityAsMob(Entity entityIn) {
+    public boolean attackEntityAsMob(@Nonnull Entity entityIn) {
         if (this.getDistance(entityIn) < 1.2) {
             return super.attackEntityAsMob(entityIn);
         }
         return false;
+    }
+
+    @Override
+    public void onUpdate() {
+        super.onUpdate();
+
+        if (!this.world.isRemote) {
+            this.setBesideClimbableBlock(this.collidedHorizontally);
+        }
+    }
+
+    public boolean isOnLadder() {
+        return this.isBesideClimbableBlock();
+    }
+
+    public boolean isBesideClimbableBlock() {
+        return (this.dataManager.get(CLIMBING) & 1) != 0;
+    }
+
+    public void setBesideClimbableBlock(boolean climbing) {
+        byte b0 = this.dataManager.get(CLIMBING);
+
+        if (climbing) {
+            b0 = (byte) (b0 | 1);
+        } else {
+            b0 = (byte) (b0 & -2);
+        }
+
+        this.dataManager.set(CLIMBING, b0);
     }
 }

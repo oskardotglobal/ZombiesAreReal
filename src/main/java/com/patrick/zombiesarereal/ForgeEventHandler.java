@@ -1,8 +1,7 @@
 package com.patrick.zombiesarereal;
 
 import com.patrick.zombiesarereal.helpers.*;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockDoor;
+import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.passive.EntityHorse;
@@ -171,6 +170,43 @@ public class ForgeEventHandler {
         event.setNewfov(Math.max(0.95F, event.getFov()));
     }
 
+    private static boolean hasPreferredTool(Block block) {
+        return !(
+                block instanceof BlockLever
+                        || block instanceof BlockGlowstone
+                        || block instanceof BlockRedstoneLight
+                        || block instanceof BlockSeaLantern
+                        || block instanceof BlockGlass
+                        || block instanceof BlockPane
+                        || block instanceof BlockStainedGlass
+                        || block instanceof BlockStainedGlassPane
+                        || block instanceof BlockCactus
+                        || block instanceof BlockCake
+                        || block instanceof BlockCarpet
+                        || block instanceof BlockBed
+                        || block instanceof BlockBeacon
+                        || block instanceof BlockRedstoneComparator
+                        || block instanceof BlockRedstoneRepeater
+                        || block instanceof BlockRedstoneWire
+                        || block instanceof BlockTripWire
+                        || block instanceof BlockTripWireHook
+                        || block instanceof BlockDeadBush
+                        || block instanceof BlockFlower
+                        || block instanceof BlockTallGrass
+                        || block instanceof BlockLilyPad
+                        || block instanceof BlockMushroom
+                        || block instanceof BlockStem
+                        || block instanceof BlockSapling
+                        || block instanceof BlockReed
+                        || block instanceof BlockTorch
+                        || block instanceof BlockFire
+                        || block instanceof BlockTNT
+                        || block instanceof BlockCrops
+                        || block instanceof BlockHay
+                        || block instanceof BlockLeaves
+        );
+    }
+
     @SubscribeEvent
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
         Block brokenBlock = event.getState().getBlock();
@@ -189,13 +225,12 @@ public class ForgeEventHandler {
                     event.getPos()
             );
 
-        boolean canBreakFasterWithItem = player.getHeldItemMainhand() == ItemStack.EMPTY
-                ? player.getHeldItemMainhand().getDestroySpeed(event.getState()) >= 1.0F
-                : ItemStack.EMPTY.getDestroySpeed(event.getState()) < player.getHeldItemMainhand().getDestroySpeed(event.getState());
+        boolean canBreakFasterWithItem = ItemStack.EMPTY.getDestroySpeed(event.getState())
+                < player.getHeldItemMainhand().getDestroySpeed(event.getState());
 
-        if (!canBreakFasterWithItem &&
-                !player.isCreative() &&
-                !brokenBlockIsCristal) {
+        if (hasPreferredTool(event.getState().getBlock()) &&
+                !canBreakFasterWithItem &&
+                !player.isCreative()) {
             event.setCanceled(true);
         }
     }

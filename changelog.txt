@@ -1,4 +1,16 @@
 =========
+Build: 2.5.0
+	oskardotglobal:
+	    Zombies now drop rotten flesh
+	    Zombies now can climb any block like spiders
+
+
+=========
+Build: 2.4.3
+	oskardotglobal:
+	    Fix the last fix because that didn't fix shit
+
+=========
 Build: 2.4.2
 	oskardotglobal:
 	    Fix not being able to break blocks without a preferred tool
